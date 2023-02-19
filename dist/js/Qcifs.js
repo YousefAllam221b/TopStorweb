@@ -55,6 +55,7 @@ var firstRequests = 7;
 //if (prot == 'NFS') firstRequests = 7;
 
 $("#showPassword").click(function (e) {
+	e.preventDefault();
 	var passwordInput = document.getElementById("dompass");
 	if (passwordInput.type === "password") {
 		passwordInput.type = "text";
