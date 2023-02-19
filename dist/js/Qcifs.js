@@ -54,15 +54,26 @@ var firstRequests = 7;
 //if (window.location.pathname.endsWith("Qnfs.html")) firstRequests = 2;
 //if (prot == 'NFS') firstRequests = 7;
 
-$("#showPassword").click(function (e) {
-	e.preventDefault();
-	var passwordInput = document.getElementById("dompass");
-	if (passwordInput.type === "password") {
-		passwordInput.type = "text";
-	} else {
-		passwordInput.type = "password";
-	}
+const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#dompass');
+
+  togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
 });
+
+// $("#showPassword").click(function (e) {
+// 	e.preventDefault();
+// 	var passwordInput = document.getElementById("dompass");
+// 	if (passwordInput.type === "password") {
+// 		passwordInput.type = "text";
+// 	} else {
+// 		passwordInput.type = "password";
+// 	}
+// });
 
 function poolsrefresh(first = 0) {
 	$(".select2.pool").select2({
