@@ -53,17 +53,39 @@ var grpsets = {};
 var firstRequests = 7;
 //if (window.location.pathname.endsWith("Qnfs.html")) firstRequests = 2;
 //if (prot == 'NFS') firstRequests = 7;
+var ShowPasswordToggle = document.querySelector("[type='password']");
+ShowPasswordToggle.onclick = function () {
+  document.querySelector("[type='password']").classList.add("input-password");
+  document.getElementById("toggle-password").classList.remove("d-none");
 
-const togglePassword = document.querySelector('#toggle-password');
-  const password = document.querySelector('#dompass');
+  const passwordInput = document.querySelector("[type='password']");
+  const togglePasswordButton = document.getElementById("toggle-password");
 
-  togglePassword.addEventListener('click', function (e) {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-});
+  togglePasswordButton.addEventListener("click", togglePassword);
+  function togglePassword() {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      togglePasswordButton.setAttribute("aria-label", "Hide password.");
+    } else {
+      passwordInput.type = "password";
+      togglePasswordButton.setAttribute(
+        "aria-label",
+        "Show password as plain text. " +
+          "Warning: this will display your password on the screen."
+      );
+    }
+  }
+};
+// const togglePassword = document.querySelector('#toggle-password');
+//   const password = document.querySelector('#dompass');
+
+//   togglePassword.addEventListener('click', function (e) {
+//     // toggle the type attribute
+//     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+//     password.setAttribute('type', type);
+//     // toggle the eye slash icon
+//     this.classList.toggle('fa-eye-slash');
+// });
 
 // $("#showPassword").click(function (e) {
 // 	e.preventDefault();
