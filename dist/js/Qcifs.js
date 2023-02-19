@@ -54,6 +54,15 @@ var firstRequests = 7;
 //if (window.location.pathname.endsWith("Qnfs.html")) firstRequests = 2;
 //if (prot == 'NFS') firstRequests = 7;
 
+$("#showPassword").click(function (e) {
+	var passwordInput = document.getElementById("dompass");
+	if (passwordInput.type === "password") {
+		passwordInput.type = "text";
+	} else {
+		passwordInput.type = "password";
+	}
+});
+
 function poolsrefresh(first = 0) {
 	$(".select2.pool").select2({
 		placeholder: "Select a pool",

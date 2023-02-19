@@ -480,3 +480,18 @@ input { text-align: center; }
 .table td.tdlog { padding-top: 0.1rem; padding-bottom: 0.1rem;}
 button { cursor : pointer ; }
 .SelectedFree { border: solid green; }
+
+.password_input {
+	display: inline-block;
+	border: 1px inset #ccc;
+}
+
+.password_input input {
+	border: none;
+	padding: 0;
+}
+
+.password_input button {
+	border: none;
+	background: none;
+}
