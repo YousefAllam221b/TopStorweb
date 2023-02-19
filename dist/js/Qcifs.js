@@ -57,9 +57,9 @@ var firstRequests = 7;
 var ShowPasswordToggle = document.querySelector("#dompass");
 ShowPasswordToggle.onclick = function() {
     document.querySelector("#dompass").classList.add("input-password");
-    document.getElementById("toggle-password").classList.remove("d-none");
+    document.getElementById("toggle-password-Qcifs").classList.remove("d-none");
     const passwordInput = document.querySelector("#dompass");
-    const togglePasswordButton = document.getElementById("toggle-password");
+    const togglePasswordButton = document.getElementById("toggle-password-Qcifs");
     togglePasswordButton.addEventListener("click", togglePassword);
     function togglePassword() {
         if (passwordInput.type === "password") {
