@@ -591,7 +591,10 @@
         <div class="modal-body">
           <form>
           <div class="input-group mb-3">
-            <input type="password" id='pass' class="form-control chpass" placeholder="Password">
+            <input type="password" class="form-control chpass" id="pass" placeholder="Password">
+            <button id="toggle-password-pass" type="button" class="d-none"
+              aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+            </button>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
