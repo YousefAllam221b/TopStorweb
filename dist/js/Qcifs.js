@@ -54,7 +54,7 @@ var firstRequests = 7;
 //if (window.location.pathname.endsWith("Qnfs.html")) firstRequests = 2;
 //if (prot == 'NFS') firstRequests = 7;
 
-const togglePassword = document.querySelector('#togglePassword');
+const togglePassword = document.querySelector('#toggle-password');
   const password = document.querySelector('#dompass');
 
   togglePassword.addEventListener('click', function (e) {
