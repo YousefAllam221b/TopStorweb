@@ -24,13 +24,13 @@ ShowPasswordToggleNewpass.onclick = function() {
 
 const passwordInputNewpass = document.querySelector("#newpass");
 const togglePasswordButtonNewpass = document.getElementById("toggle-password-newpass");
-togglePasswordButtonNewpass.addEventListener("click", togglePassword);
-function togglePassword() {
+togglePasswordButtonNewpass.addEventListener("click", togglePasswordNewpass);
+function togglePasswordNewpass() {
     if (passwordInputNewpass.type === "password") {
         passwordInputNewpass.type = "text";
         togglePasswordButtonNewpass.setAttribute("aria-label", "Hide password.")
     } else {
         passwordInputNewpass.type = "password";
-        togglePasswordButtonNewpass.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
+        togglePasswordButtonNewpass.setAttribute("aria-label", "Show password as plain text.")
     }
 }
