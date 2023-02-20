@@ -1,34 +1,35 @@
-var ShowPasswordToggle = document.querySelector("#pass");
-ShowPasswordToggle.onclick = function() {
+var ShowPasswordTogglePass = document.querySelector("#pass");
+ShowPasswordTogglePass.onclick = function() {
     document.querySelector("#pass").classList.add("input-password");
     document.getElementById("toggle-password-pass").classList.remove("d-none");
-    const passwordInput = document.querySelector("#pass");
-    const togglePasswordButton = document.getElementById("toggle-password-pass");
-    togglePasswordButton.addEventListener("click", togglePassword);
+    const passwordInputPass = document.querySelector("#pass");
+    const togglePasswordButtonPass = document.getElementById("toggle-password-pass");
+    togglePasswordButtonPass.addEventListener("click", togglePassword);
     function togglePassword() {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            togglePasswordButton.setAttribute("aria-label", "Hide password.")
+        if (passwordInputPass.type === "password") {
+            passwordInputPass.type = "text";
+            togglePasswordButtonPass.setAttribute("aria-label", "Hide password.")
         } else {
-            passwordInput.type = "password";
-            togglePasswordButton.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
+            passwordInputPass.type = "password";
+            togglePasswordButtonPass.setAttribute("aria-label", "Show password as plain text.")
         }
     }
 };
-var ShowPasswordToggle = document.querySelector("#newpass");
-ShowPasswordToggle.onclick = function() {
+
+var ShowPasswordToggleNewpass = document.querySelector("#newpass");
+ShowPasswordToggleNewpass.onclick = function() {
     document.querySelector("#newpass").classList.add("input-password");
     document.getElementById("toggle-password-newpass").classList.remove("d-none");
-    const passwordInput = document.querySelector("#newpass");
-    const togglePasswordButton = document.getElementById("toggle-password-newpass");
-    togglePasswordButton.addEventListener("click", togglePassword);
+    const passwordInputNewpass = document.querySelector("#newpass");
+    const togglePasswordButtonNewpass = document.getElementById("toggle-password-newpass");
+    togglePasswordButtonNewpass.addEventListener("click", togglePassword);
     function togglePassword() {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            togglePasswordButton.setAttribute("aria-label", "Hide password.")
+        if (passwordInputNewpass.type === "password") {
+            passwordInputNewpass.type = "text";
+            togglePasswordButtonNewpass.setAttribute("aria-label", "Hide password.")
         } else {
-            passwordInput.type = "password";
-            togglePasswordButton.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
+            passwordInputNewpass.type = "password";
+            togglePasswordButtonNewpass.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
         }
     }
 };
