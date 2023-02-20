@@ -58,7 +58,6 @@ var ShowPasswordToggle = document.querySelector("#dompass");
 ShowPasswordToggle.onclick = function() {
     document.querySelector("#dompass").classList.add("input-password");
     document.getElementById("toggle-password-Qcifs").classList.remove("d-none");
-    
 };
 const passwordInput = document.querySelector("#dompass");
 const togglePasswordButton = document.getElementById("toggle-password-Qcifs");
