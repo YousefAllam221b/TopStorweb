@@ -58,20 +58,20 @@ var ShowPasswordToggle = document.querySelector("#dompass");
 ShowPasswordToggle.onclick = function() {
     document.querySelector("#dompass").classList.add("input-password");
     document.getElementById("toggle-password-Qcifs").classList.remove("d-none");
-    const passwordInput = document.querySelector("#dompass");
-    const togglePasswordButton = document.getElementById("toggle-password-Qcifs");
-    togglePasswordButton.addEventListener("click", togglePassword);
-    function togglePassword() {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            togglePasswordButton.setAttribute("aria-label", "Hide password.")
-        } else {
-            passwordInput.type = "password";
-            togglePasswordButton.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
-        }
-    }
+    
+};
+const passwordInput = document.querySelector("#dompass");
+const togglePasswordButton = document.getElementById("toggle-password-Qcifs");
+togglePasswordButton.addEventListener("click", togglePassword);
+function togglePassword() {
+	if (passwordInput.type === "password") {
+		passwordInput.type = "text";
+		togglePasswordButton.setAttribute("aria-label", "Hide password.")
+	} else {
+		passwordInput.type = "password";
+		togglePasswordButton.setAttribute("aria-label", "Show password as plain text. " + "Warning: this will display your password on the screen.")
+	}
 }
-;
 function poolsrefresh(first = 0) {
 	$(".select2.pool").select2({
 		placeholder: "Select a pool",
