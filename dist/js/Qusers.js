@@ -78,7 +78,13 @@ $('#uploadUsers').change(function (e) {
 	var apidata = {
 		files: data
 	};
-	postdata(apiurl, apidata);
+	$.ajax({
+		url: "api/v1/users/uploadUsers",
+		type: "POST",
+		data:{'files':data},
+
+	});
+	// postdata(apiurl, apidata);
 	console.log('Should be done')
 })
 
