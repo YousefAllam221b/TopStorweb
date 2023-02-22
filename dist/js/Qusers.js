@@ -66,27 +66,22 @@ $("#User").change(function (e) {
 	}
 });
 
-$('#uploadUsers').change(function (e) {
+// $('#uploadUsers').change(function (e) {
 
-	let files = e.target.files
-	let fileName = files[0].name
-	var data = new FormData()
-	data.append('files', files[0]) // maybe it should be '{target}_cand'
-	data.append('name', fileName)
-	console.log(data.get('files'))
-	var apiurl = "api/v1/users/uploadUsers";
-	var apidata = {
-		files: data
-	};
-	$.ajax({
-		url: "api/v1/users/uploadUsers",
-		type: "POST",
-		data:{'files':data},
-
-	});
-	// postdata(apiurl, apidata);
-	console.log('Should be done')
-})
+// 	let files = e.target.files
+// 	let fileName = files[0].name
+// 	var data = new FormData()
+// 	data.append('files', files[0]) // maybe it should be '{target}_cand'
+// 	data.append('name', fileName)
+// 	console.log(data.get('files'))
+// 	$.ajax({
+// 		url: "api/v1/users/uploadUsers",
+// 		type: "POST",
+// 		body:data
+// 	});
+// 	// postdata(apiurl, apidata);
+// 	console.log('Should be done')
+// })
 
 function groupsrefresh() {
 	$(".select2.multiple").select2({

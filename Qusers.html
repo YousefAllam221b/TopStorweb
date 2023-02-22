@@ -331,7 +331,7 @@
           <div class="offset-1 col-md-10">
             <div class="card">
               <!-- form start -->
-              <form>
+              <form action="api/v1/users/userchange" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group row">
                     <label for="User" class="col-2 col-form-label">User Name</label>
@@ -364,8 +364,11 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer" style="background-color: white">
-                  <button type="submit"  id="UnixAddUser" class="btn btn-add" style="opacity: 1;">Add User</button>
-                  <input type="file" id="uploadUsers" class="btn btn-add" style="opacity: 1;"/>
+                  <button   id="UnixAddUser" class="btn btn-add" style="opacity: 1;">Add User</button>
+                  <!-- <input type="file" id="uploadUsers" class="btn btn-add" style="opacity: 1;"/> -->
+                  <input type="file" name="file"
+            >
+        <input type="submit" value="Upload">
                 </div>
               </form>
             </div> <!-- /.card -->
