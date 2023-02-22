@@ -76,7 +76,7 @@ $('#uploadUsers').change(function (e) {
 	console.log(data.get('files'))
 	var apiurl = "api/v1/users/uploadUsers";
 	var apidata = {
-		body: data
+		files: data
 	};
 	postdata(apiurl, apidata);
 	console.log('Should be done')
