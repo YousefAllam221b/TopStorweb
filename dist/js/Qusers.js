@@ -66,34 +66,22 @@ $("#User").change(function (e) {
 	}
 });
 
-document.querySelector('#uploadUsers').addEventListener('change', event => {
+$('#uploadUsers').change(function (e) {
 
-	let files = event.target.files
+	let files = e.target.files
 	let fileName = files[0].name
-	
-	// your code start here
 	var data = new FormData()
 	data.append('files', files[0]) // maybe it should be '{target}_cand'
 	data.append('name', fileName)
 	console.log(data.get('files'))
-  
-	// let url = "http://localhost:5001/v1/cand"
-	// let url = "https://tongsampah.herokuapp.com"
-	// fetch(url,{
-	//   method:"POST",
-	//   // body: {files:files[0]}, // wrong
-	//   body: data,
-	// })
-	// .then(function(response){
-	//   return response.json()
-	// })
-	// // .then(function(data){ // use different name to avoid confusion
-	// .then(function(res){
-	//   console.log('success')
-	//   console.log(res)
-	// })
-  
-  })
+	var apiurl = "api/v1/users/uploadUsers";
+	var apidata = {
+		body: data
+	};
+	postdata(apiurl, apidata);
+	console.log('Should be done')
+})
+
 function groupsrefresh() {
 	$(".select2.multiple").select2({
 		ajax: {
