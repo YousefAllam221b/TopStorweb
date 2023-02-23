@@ -65,21 +65,50 @@ $("#User").change(function (e) {
 		$("#UnixAddUser").prop("disabled", true);
 	}
 });
-$(function() {
-    $('#upload-file-btn').click(function() {
-        var form_data = new FormData($('#upload-file')[0]);
-        $.ajax({
-            type: 'POST',
-            url: 'api/v1/users/uploadUsers',
-            data: form_data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                console.log('Success!');
-            },
+
+let ExcelToJSONParser = function() {
+    this.parseExcel = function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+          type: 'binary'
         });
-    });
+        workbook.SheetNames.forEach(function(sheetName) {
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          var json_object = JSON.stringify(XL_row_object);
+          console.log(JSON.parse(json_object));
+          jQuery('#xlx_json').val(json_object);
+        })
+      };
+      reader.onerror = function(ex) {
+        console.log(ex);
+      };
+      reader.readAsBinaryString(file);
+    };
+  };
+
+function uploadFile(e) {
+    var files = e.target.files; 
+    var parsedExcel = new ExcelToJSONParser();
+    console.log(parsedExcel.parseExcel(files[0]));
+}
+$('#uploaderInput').change(function(e) {
+	uploadFile(e);
+})
+$('#upload-file-btn').click(function() {
+	var form_data = new FormData($('#upload-file')[0]);
+	$.ajax({
+		type: 'POST',
+		url: 'api/v1/users/uploadUsers',
+		data: form_data,
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function(data) {
+			console.log('Success!');
+		},
+	});
 });
 
 function groupsrefresh() {

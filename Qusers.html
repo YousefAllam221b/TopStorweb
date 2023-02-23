@@ -362,13 +362,10 @@
                   </div>
                 </div>
                 <!-- /.card-body -->
-
                 <div class="card-footer" style="background-color: white">
-                  <button   id="UnixAddUser" class="btn btn-add" style="opacity: 1;">Add User</button>
-                  <!-- <input type="file" id="uploadUsers" class="btn btn-add" style="opacity: 1;"/> -->
-                  <input type="file" name="file"
-            >
-            <button id="upload-file-btn" type="button">Upload</button>
+                  <button id="UnixAddUser" class="btn btn-add" style="opacity: 1;">Add User</button>
+                  <input id="uploaderInput" type="file" name="file" class="btn btn-add" style="opacity: 1;">
+                  <button id="upload-file-btn" type="button">Upload</button>
                 </div>
               </form>
             </div> <!-- /.card -->
@@ -524,6 +521,9 @@
 <script src="plugins/chart.js/Chart.min.js"></script>
 <script src="dist/js/demo.js"></script>
 <script src="dist/js/Qmain.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 </body>
 <script>
 
