@@ -80,18 +80,61 @@ let ExcelToJSONParser = function() {
 			let parsedUsers = JSON.parse(json_object)
 			console.log(parsedUsers);
 			let grouplist;
+			let poolsList;
+			let usersList;
 			$.ajax({
 				url: "api/v1/users/grouplist",
 				dataType: "json",
-				// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
 				type: "GET",
 				async: false,
 				success: function(data) {
-					console.log(data);
-					grouplist = data;
+					grouplist = data.results;
+				},
+			});
+			$.ajax({
+				url: "api/v1/pools/poolsinfo",
+				dataType: "json",
+				type: "GET",
+				async: false,
+				success: function(data) {
+					poolsList = data.results;
 				},
 			})
-			console.log(grouplist);
+			$.ajax({
+				url: "api/v1/users/userlist",
+				async: false,
+				type: "GET",
+				dataSrc: "allusers",
+				success: function(data) {
+					usersList = data.allusers;
+				},
+			})
+			let usersNames = usersList.map(user => user['name']);
+			let poolIds = poolsList.map(pool => pool['id']);
+			let groupIds = grouplist.map(group => group['id']);
+			console.log(`Used Names ${usersNames}`);
+			console.log(`Available Pools ${poolIds}`);
+			console.log(`Available Groups ${groupIds}`);
+
+			let flag= false;
+			for (user in parsedUsers)
+			{
+				if (user['name'] in usersNames)
+					flag = true;
+				if (!(str(user['Volpool']) in poolIds))
+					flag = true;
+				for (group in user['groups'].split(','))
+				{
+					if (!(group in groupIds))
+						flag = true
+				}
+				for (number in user['HomeAddress'].split('.'))
+				{
+					if (int(number) > 255 || int(number) < 0)
+					flag = true
+				}
+				console.log(`For User ${user}, flag is ${flag}`);
+			}
         	//   jQuery('#xlx_json').val(json_object);
         })
       };
