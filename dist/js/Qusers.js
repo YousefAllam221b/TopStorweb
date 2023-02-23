@@ -119,6 +119,7 @@ let ExcelToJSONParser = function() {
 			let flag= false;
 			let badusers = [];
 			parsedUsers.forEach(user => {
+				flag= false;
 				console.log('user');
 				console.log(user);
 				if (user['name'] in usersNames)
