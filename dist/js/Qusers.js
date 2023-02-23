@@ -172,13 +172,11 @@ let ExcelToJSONParser = function() {
     };
   };
 
-function uploadFile(e) {
-    var files = e.target.files; 
+$('#uploaderInput').change(function(e) {
+	var files = e.target.files; 
+	console.log(files);
     var parsedExcel = new ExcelToJSONParser();
     parsedExcel.parseExcel(files[0]);
-}
-$('#uploaderInput').change(function(e) {
-	uploadFile(e);
 })
 $('#upload-file-btn').click(function() {
 	var form_data = new FormData($('#upload-file')[0]);
