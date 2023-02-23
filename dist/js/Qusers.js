@@ -67,6 +67,7 @@ $("#User").change(function (e) {
 });
 
 let ExcelToJSONParser = function() {
+	this.parsedUsers;
     this.parseExcel = function(file) {
       var reader = new FileReader();
       reader.onload = function(e) {
@@ -77,8 +78,9 @@ let ExcelToJSONParser = function() {
         workbook.SheetNames.forEach(function(sheetName) {
           var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
           var json_object = JSON.stringify(XL_row_object);
-          console.log(JSON.parse(json_object));
-          jQuery('#xlx_json').val(json_object);
+		  this.parsedUsers =json_object
+        //   console.log(JSON.parse(json_object));
+        //   jQuery('#xlx_json').val(json_object);
         })
       };
       reader.onerror = function(ex) {
@@ -91,7 +93,8 @@ let ExcelToJSONParser = function() {
 function uploadFile(e) {
     var files = e.target.files; 
     var parsedExcel = new ExcelToJSONParser();
-    console.log(parsedExcel.parseExcel(files[0]));
+    parsedExcel.parseExcel(files[0]);
+	console.log(parsedExcel.parsedUsers);
 }
 $('#uploaderInput').change(function(e) {
 	uploadFile(e);
