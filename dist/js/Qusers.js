@@ -174,7 +174,9 @@ let ExcelToJSONParser = function() {
 
 $('#uploaderInput').change(function(e) {
 	var files = e.target.files; 
-	console.log(files);
+	// console.log(files);
+	if (files.length === 0)
+		return
     var parsedExcel = new ExcelToJSONParser();
     parsedExcel.parseExcel(files[0]);
 })
