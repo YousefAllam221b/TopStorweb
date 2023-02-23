@@ -72,7 +72,7 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 	// Checks if there is a name  and it is unique.
 	if (usersNames.includes(user['name']) || user['name'] === undefined || user['name'] === '')
 		flag = true;
-	if (user['Password'].length < 3)
+	if ( user['Password'] === undefined || user['Password'].length < 3)
 		flag = true;
 	// Checks if the user selected a Pool.
 	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
