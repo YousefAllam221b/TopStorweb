@@ -134,8 +134,8 @@ let ExcelToJSONParser = function() {
 			let poolsListData;
 			let usersListData;
 			getList("api/v1/users/grouplist", grouplistData);
-			getList("api/v1/pools/poolsinfo", poolsList);
-			getList("api/v1/users/userlist", usersList);
+			getList("api/v1/pools/poolsinfo", poolsListData);
+			getList("api/v1/users/userlist", usersListData);
 			let grouplist = grouplistData.results;
 			let poolsList = poolsListData.results;
 			let usersList = usersListData.allusers;
