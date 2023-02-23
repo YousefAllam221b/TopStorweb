@@ -69,8 +69,10 @@ $("#User").change(function (e) {
 function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 {
 	let flag = false;
-	// Checks if the name is unique.
-	if (user['name'] in usersNames)
+	// Checks if there is a name  and it is unique.
+	if (user['name'] in usersNames || user['name'] === undefined || user['name'] === '')
+		flag = true;
+	if (user['Password'].length < 3)
 		flag = true;
 	// Checks if the user selected a Pool.
 	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
