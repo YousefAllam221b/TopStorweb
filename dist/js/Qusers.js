@@ -65,23 +65,22 @@ $("#User").change(function (e) {
 		$("#UnixAddUser").prop("disabled", true);
 	}
 });
-
-// $('#uploadUsers').change(function (e) {
-
-// 	let files = e.target.files
-// 	let fileName = files[0].name
-// 	var data = new FormData()
-// 	data.append('files', files[0]) // maybe it should be '{target}_cand'
-// 	data.append('name', fileName)
-// 	console.log(data.get('files'))
-// 	$.ajax({
-// 		url: "api/v1/users/uploadUsers",
-// 		type: "POST",
-// 		body:data
-// 	});
-// 	// postdata(apiurl, apidata);
-// 	console.log('Should be done')
-// })
+$(function() {
+    $('#upload-file-btn').click(function() {
+        var form_data = new FormData($('#upload-file')[0]);
+        $.ajax({
+            type: 'POST',
+            url: 'api/v1/users/uploadUsers',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                console.log('Success!');
+            },
+        });
+    });
+});
 
 function groupsrefresh() {
 	$(".select2.multiple").select2({
