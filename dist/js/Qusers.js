@@ -75,13 +75,24 @@ let ExcelToJSONParser = function() {
           type: 'binary'
         });
         workbook.SheetNames.forEach(function(sheetName) {
-          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-          var json_object = JSON.stringify(XL_row_object);
-		  let parsedUsers = JSON.parse(json_object)
-          console.log(parsedUsers);
-		  
-
-        //   jQuery('#xlx_json').val(json_object);
+			var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			var json_object = JSON.stringify(XL_row_object);
+			let parsedUsers = JSON.parse(json_object)
+			console.log(parsedUsers);
+			let grouplist;
+			$.ajax({
+				url: "api/v1/users/grouplist",
+				dataType: "json",
+				// Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+				type: "GET",
+				async: false,
+				success: function(data) {
+					console.log(data);
+					grouplist = data;
+				},
+			})
+			console.log(grouplist);
+        	//   jQuery('#xlx_json').val(json_object);
         })
       };
       reader.onerror = function(ex) {
