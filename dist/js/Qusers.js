@@ -115,10 +115,11 @@ let ExcelToJSONParser = function() {
 			console.log(`Used Names ${usersNames}`);
 			console.log(`Available Pools ${poolIds}`);
 			console.log(`Available Groups ${groupIds}`);
-
+			console.log(parsedUsers);
 			let flag= false;
-			for (user in parsedUsers)
-			{
+			parsedUsers.forEach(user => {
+				console.log('user');
+				console.log(user);
 				if (user['name'] in usersNames)
 					flag = true;
 				if (!(str(user['Volpool']) in poolIds))
@@ -134,7 +135,7 @@ let ExcelToJSONParser = function() {
 					flag = true
 				}
 				console.log(`For User ${user}, flag is ${flag}`);
-			}
+			});
         	//   jQuery('#xlx_json').val(json_object);
         })
       };
