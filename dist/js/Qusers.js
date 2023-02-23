@@ -122,7 +122,7 @@ let ExcelToJSONParser = function() {
 				console.log(user);
 				if (user['name'] in usersNames)
 					flag = true;
-				if (!(str(user['Volpool']) in poolIds))
+				if (!(user['Volpool'].toString() in poolIds))
 					flag = true;
 				for (group in user['groups'].split(','))
 				{
@@ -131,7 +131,7 @@ let ExcelToJSONParser = function() {
 				}
 				for (number in user['HomeAddress'].split('.'))
 				{
-					if (int(number) > 255 || int(number) < 0)
+					if (parseInt(number) > 255 || parseInt(number) < 0)
 					flag = true
 				}
 				console.log(`For User ${user}, flag is ${flag}`);
