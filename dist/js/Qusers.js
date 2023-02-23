@@ -105,9 +105,9 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 	}
 	return flag;
 }
-function getList(url, list)
+async function getList(url, list)
 {
-	$.ajax({
+	await $.ajax({
 		url: url,
 		dataType: "json",
 		type: "GET",
