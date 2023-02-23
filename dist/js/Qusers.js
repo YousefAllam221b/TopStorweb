@@ -70,7 +70,7 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 {
 	let flag = false;
 	// Checks if there is a name  and it is unique.
-	if (user['name'] in usersNames || user['name'] === undefined || user['name'] === '')
+	if (usersNames.includes(user['name']) || user['name'] === undefined || user['name'] === '')
 		flag = true;
 	if (user['Password'].length < 3)
 		flag = true;
