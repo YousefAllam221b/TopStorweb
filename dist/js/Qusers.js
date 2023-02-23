@@ -124,16 +124,14 @@ let ExcelToJSONParser = function() {
 					flag = true;
 				if (!(user['Volpool'].toString() in poolIds))
 					flag = true;
-				for (group in user['groups'].split(','))
-				{
+				user['groups'].split(',').forEach(group => {
 					if (!(group in groupIds))
-						flag = true
-				}
-				for (number in user['HomeAddress'].split('.'))
-				{
+					flag = true
+				});
+				user['HomeAddress'].split('.').forEach(number => {
 					if (parseInt(number) > 255 || parseInt(number) < 0)
 					flag = true
-				}
+				});
 				console.log(`For User ${user}, flag is ${flag}`);
 			});
         	//   jQuery('#xlx_json').val(json_object);
