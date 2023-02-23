@@ -105,19 +105,6 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 	}
 	return flag;
 }
-async function getList(url, list)
-{
-	await $.ajax({
-		url: url,
-		dataType: "json",
-		type: "GET",
-		async: false,
-		success: function(data) {
-			list = data;
-		},
-	});
-}
-
 let ExcelToJSONParser = function() {
     this.parseExcel = function(file) {
       var reader = new FileReader();
@@ -129,16 +116,37 @@ let ExcelToJSONParser = function() {
         workbook.SheetNames.forEach(function(sheetName) {
 			var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			var json_object = JSON.stringify(XL_row_object);
-			let parsedUsers = JSON.parse(json_object);
-			let grouplistData;
-			let poolsListData;
-			let usersListData;
-			getList("api/v1/users/grouplist", grouplistData);
-			getList("api/v1/pools/poolsinfo", poolsListData);
-			getList("api/v1/users/userlist", usersListData);
-			let grouplist = grouplistData.results;
-			let poolsList = poolsListData.results;
-			let usersList = usersListData.allusers;
+			let parsedUsers = JSON.parse(json_object)
+			let grouplist;
+			let poolsList;
+			let usersList;
+			$.ajax({
+				url: "api/v1/users/grouplist",
+				dataType: "json",
+				type: "GET",
+				async: false,
+				success: function(data) {
+					grouplist = data.results;
+				},
+			});
+			$.ajax({
+				url: "api/v1/pools/poolsinfo",
+				dataType: "json",
+				type: "GET",
+				async: false,
+				success: function(data) {
+					poolsList = data.results;
+				},
+			})
+			$.ajax({
+				url: "api/v1/users/userlist",
+				async: false,
+				type: "GET",
+				dataSrc: "allusers",
+				success: function(data) {
+					usersList = data.allusers;
+				},
+			})
 			let usersNames = usersList.map(user => user['name']);
 			let poolIds = poolsList.map(pool => pool['id']);
 			let groupIds = grouplist.map(group => group['id']);
