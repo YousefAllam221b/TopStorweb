@@ -117,6 +117,7 @@ let ExcelToJSONParser = function() {
 			console.log(`Available Groups ${groupIds}`);
 			console.log(parsedUsers);
 			let flag= false;
+			let badusers = [];
 			parsedUsers.forEach(user => {
 				console.log('user');
 				console.log(user);
@@ -132,8 +133,14 @@ let ExcelToJSONParser = function() {
 					if (parseInt(number) > 255 || parseInt(number) < 0)
 					flag = true
 				});
-				console.log(`For User ${user}, flag is ${flag}`);
+				if (flag === true)
+					badusers.push(user);
+				else
+					usersNames.push(user['name']);
+				console.log(`For this User, flag is ${flag}`);
 			});
+			console.log('BadUsers');
+			console.log(badusers);
         	//   jQuery('#xlx_json').val(json_object);
         })
       };
