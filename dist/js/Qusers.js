@@ -66,6 +66,58 @@ $("#User").change(function (e) {
 	}
 });
 
+function uploadUsersChecker(user, usersNames, poolIds, groupIds)
+{
+	let flag = false;
+	// Checks if the name is unique.
+	if (user['name'] in usersNames)
+		flag = true;
+	// Checks if the user selected a Pool.
+	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
+	{
+		// Checks that the Pool is valid.
+		if (!(user['Volpool'].toString() in poolIds))
+			flag = true;
+	}
+	// Checks if the user selected a group.
+	if (!(user['groups'] === undefined || user['groups'] === ''))
+	{
+		// Checks that each group selected is valid.
+		user['groups'].split(',').forEach(group => {
+			if (!(group in groupIds))
+			flag = true
+		});
+	}
+	// Checks if the user selected a HomeAddress.
+	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+	{
+		// Checks if the HomeAddress is in the correct form.
+		if (user['HomeAddress'].split('.').length === 4)
+		{
+			// Checks that each number is valid.
+			user['HomeAddress'].split('.').forEach(number => {
+				if (parseInt(number) > 255 || parseInt(number) < 0)
+				flag = true
+			});
+		} 
+		else
+			flag = true;
+	}
+	return flag;
+}
+function getList(url, list)
+{
+	$.ajax({
+		url: url,
+		dataType: "json",
+		type: "GET",
+		async: false,
+		success: function(data) {
+			list = data;
+		},
+	});
+}
+
 let ExcelToJSONParser = function() {
     this.parseExcel = function(file) {
       var reader = new FileReader();
@@ -77,68 +129,26 @@ let ExcelToJSONParser = function() {
         workbook.SheetNames.forEach(function(sheetName) {
 			var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			var json_object = JSON.stringify(XL_row_object);
-			let parsedUsers = JSON.parse(json_object)
-			console.log(parsedUsers);
-			let grouplist;
-			let poolsList;
-			let usersList;
-			$.ajax({
-				url: "api/v1/users/grouplist",
-				dataType: "json",
-				type: "GET",
-				async: false,
-				success: function(data) {
-					grouplist = data.results;
-				},
-			});
-			$.ajax({
-				url: "api/v1/pools/poolsinfo",
-				dataType: "json",
-				type: "GET",
-				async: false,
-				success: function(data) {
-					poolsList = data.results;
-				},
-			})
-			$.ajax({
-				url: "api/v1/users/userlist",
-				async: false,
-				type: "GET",
-				dataSrc: "allusers",
-				success: function(data) {
-					usersList = data.allusers;
-				},
-			})
+			let parsedUsers = JSON.parse(json_object);
+			let grouplistData;
+			let poolsListData;
+			let usersListData;
+			getList("api/v1/users/grouplist", grouplistData);
+			getList("api/v1/pools/poolsinfo", poolsList);
+			getList("api/v1/users/userlist", usersList);
+			let grouplist = grouplistData.results;
+			let poolsList = poolsListData.results;
+			let usersList = usersListData.allusers;
 			let usersNames = usersList.map(user => user['name']);
 			let poolIds = poolsList.map(pool => pool['id']);
 			let groupIds = grouplist.map(group => group['id']);
-			console.log(`Used Names ${usersNames}`);
-			console.log(`Available Pools ${poolIds}`);
-			console.log(`Available Groups ${groupIds}`);
-			console.log(parsedUsers);
-			let flag= false;
 			let badusers = [];
 			parsedUsers.forEach(user => {
-				flag= false;
-				console.log('user');
-				console.log(user);
-				if (user['name'] in usersNames)
-					flag = true;
-				if (!(user['Volpool'].toString() in poolIds))
-					flag = true;
-				user['groups'].split(',').forEach(group => {
-					if (!(group in groupIds))
-					flag = true
-				});
-				user['HomeAddress'].split('.').forEach(number => {
-					if (parseInt(number) > 255 || parseInt(number) < 0)
-					flag = true
-				});
+				let flag = uploadUsersChecker(user, usersNames, poolIds, groupIds);
 				if (flag === true)
 					badusers.push(user);
 				else
 					usersNames.push(user['name']);
-				console.log(`For this User, flag is ${flag}`);
 			});
 			console.log('BadUsers');
 			console.log(badusers);
