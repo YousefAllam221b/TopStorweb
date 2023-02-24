@@ -170,9 +170,13 @@ let ExcelToJSONParser = function() {
 				else if(user['name'] === undefined || user['name'] === '')
 					tableRow += `<td class="table-danger"></td>`;
 				// Password
-				if ( user['Password'] === undefined || user['Password'].length < 3)
+				if (user['Password'] === undefined || user['Password'] === '')
+					tableRow += `<td class="table-danger"></td>`;
+				else if (user['Password'].length < 3)
 					tableRow += `<td class="table-danger">${user['Password']}</td>`;
-				// Pool
+				else 
+					tableRow += `<td>${user['Password']}</td>`;
+				// Volpool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
 					// Checks that the Pool is valid.
@@ -182,7 +186,7 @@ let ExcelToJSONParser = function() {
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
 					tableRow += `<td class="table-danger">No Home</td>`;
-				// Size
+				// Volsize
 				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
 					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
 				else
@@ -193,11 +197,14 @@ let ExcelToJSONParser = function() {
 					// Checks if the HomeAddress is in the correct form.
 					if (user['HomeAddress'].split('.').length === 4)
 					{
-						// Checks that each number is valid.
+						let addressFlag = false;
 						user['HomeAddress'].split('.').forEach(number => {
 							if (parseInt(number) > 255 || parseInt(number) < 0)
-							tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
+							addressFlag = true;
 						});
+						if (addressFlag)
+							tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
+						else tableRow += `<td>${user['HomeAddress']}</td>`;
 					} 
 					else
 						tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
