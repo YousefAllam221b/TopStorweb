@@ -66,6 +66,7 @@ $("#User").change(function (e) {
 	}
 });
 
+
 function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 {
 	let flag = false;
@@ -160,8 +161,52 @@ let ExcelToJSONParser = function() {
 				else
 					usersNames.push(user['name']);
 			});
-			console.log('BadUsers');
-			console.log(badusers);
+			let tableBody = '';
+			badusers.forEach(user => {
+				let tableRow =  '<tr>';
+				if (usersNames.includes(user['name']))
+					tableRow += `<td class="table-danger">${user['name']}</td>`;
+				else if(user['name'] === undefined || user['name'] === '')
+					tableRow += `<td class="table-danger"></td>`;
+				if ( user['Password'] === undefined || user['Password'].length < 3)
+					tableRow += `<td class="table-danger">${user['Password']}</td>`;
+				// Checks if the user selected a Pool.
+				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
+				{
+					// Checks that the Pool is valid.
+					if (!(user['Volpool'].toString() in poolIds))
+						tableRow += `<td class="table-danger">${user['Volpool']}</td>`;
+				}
+				else if (user['Volpool'] === undefined || user['Volpool'] === '')
+					tableRow += `<td class="table-danger"></td>`;
+				// Checks if the user selected a group.
+				if (!(user['groups'] === undefined || user['groups'] === ''))
+				{
+					// Checks that each group selected is valid.
+					user['groups'].split(',').forEach(group => {
+						if (!(group in groupIds))
+							tableRow += '<td class="table-danger"></td>';
+					});
+				}
+				// Checks if the user selected a HomeAddress.
+				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+				{
+					// Checks if the HomeAddress is in the correct form.
+					if (user['HomeAddress'].split('.').length === 4)
+					{
+						// Checks that each number is valid.
+						user['HomeAddress'].split('.').forEach(number => {
+							if (parseInt(number) > 255 || parseInt(number) < 0)
+							tableRow += '<td class="table-danger"></td>';
+						});
+					} 
+					else
+					tableRow += '<td class="table-danger"></td>';
+				}
+				tableRow +=  '</tr>';
+				tableBody += tableRow;
+			})
+			document.getElementById("badUsersBody").innerHTML =tableBody;
         	//   jQuery('#xlx_json').val(json_object);
         })
       };
