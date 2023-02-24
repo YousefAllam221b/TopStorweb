@@ -172,9 +172,16 @@ let ExcelToJSONParser = function() {
     };
   };
 
+$('#uploaderInput').click(function(e) {
+var files = e.target.files; 
+if (files.length === 0)
+{
+	$('#upload-file-btn').prop('disabled', true);
+}
+})
+
 $('#uploaderInput').change(function(e) {
 	var files = e.target.files; 
-	// console.log(files);
 	if (files.length === 0)
 	{
 		$('#upload-file-btn').prop('disabled', true);
