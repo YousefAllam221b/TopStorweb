@@ -168,7 +168,7 @@ let ExcelToJSONParser = function() {
 				tableRow += `<td>${user['index'] + 1}</td>`;
 				// Name
 				if (usersNames.includes(user['name']))
-					tableRow += `<td class="table-danger">${user['name']}</td>`;
+					tableRow += `<td class="table-danger text-danger">${user['name']}</td>`;
 				else if(user['name'] === undefined || user['name'] === '')
 					tableRow += `<td class="table-danger"></td>`;
 				else tableRow += `<td>${user['name']}</td>`;
@@ -176,13 +176,13 @@ let ExcelToJSONParser = function() {
 				if (user['Password'] === undefined || user['Password'] === '')
 					tableRow += `<td class="table-danger"></td>`;
 				else if (user['Password'].length < 3)
-					tableRow += `<td class="table-danger">${user['Password']}</td>`;
+					tableRow += `<td class="table-danger text-danger">${user['Password']}</td>`;
 				else tableRow += `<td>${user['Password']}</td>`;
 				// Volpool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
 					if (!(poolNames.includes(user['Volpool'])))
-						tableRow += `<td class="table-danger">${user['Volpool']}</td>`;
+						tableRow += `<td class="table-danger text-danger">${user['Volpool']}</td>`;
 					else tableRow += `<td>${user['Volpool']}</td>`;
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
@@ -198,13 +198,17 @@ let ExcelToJSONParser = function() {
 					if (user['HomeAddress'].split('.').length === 4)
 					{
 						let addressFlag = false;
+						let addressHtml = [];
 						user['HomeAddress'].split('.').forEach(number => {
 							if (parseInt(number) > 255 || parseInt(number) < 0)
-							addressFlag = true;
+							{
+								addressHtml.push(`<p class='text-danger'>${number}</p>`)
+								addressFlag = true;
+							} else addressHtml.push(`<p>${number}</p>`);
 						});
 						if (addressFlag)
-							tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
-						else tableRow += `<td>${user['HomeAddress']}</td>`;
+							tableRow += `<td class="table-danger d-flex">${addressHtml.join(',')}</td>`;
+						else tableRow += `<td>${user['HomeAddress']}</td>`;	
 					} 
 					else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
 				} else tableRow += `<td>No Address</td>`;
