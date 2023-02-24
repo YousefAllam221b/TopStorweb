@@ -216,7 +216,7 @@ let ExcelToJSONParser = function() {
 						if (!(groupNames.includes(group)))
 							groupsFlag = true;
 					});
-					if (groupsFlag) tableRow += `<td>${user['groups']}</td>`;
+					if (groupsFlag) tableRow += `<td class='table-danger'>${user['groups']}</td>`;
 					else  tableRow += `<td>${user['groups']}</td>`;
 				}
 				else tableRow += `<td>No Groups</td>`;
