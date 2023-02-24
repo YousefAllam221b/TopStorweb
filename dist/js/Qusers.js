@@ -165,7 +165,7 @@ let ExcelToJSONParser = function() {
 			let tableBody = '';
 			badusers.forEach((user) => {
 				let tableRow =  '<tr>';
-				tableRow += `<td>${user['index']}</td>`;
+				tableRow += `<td>${user['index'] + 1}</td>`;
 				// Name
 				if (usersNames.includes(user['name']))
 					tableRow += `<td class="table-danger">${user['name']}</td>`;
@@ -222,7 +222,7 @@ let ExcelToJSONParser = function() {
 						{
 							groupHtml.push(`<p class='text-danger'>${group}</p>`)
 							groupsFlag = true;
-						} else `<p>${group}</p>`
+						} else groupHtml.push(`<p>${group}</p>`);
 					});
 					if (groupsFlag) tableRow += `<td class='table-danger d-flex'>${groupHtml.join(',')}</td>`;
 					else  tableRow += `<td>${user['groups']}</td>`;
