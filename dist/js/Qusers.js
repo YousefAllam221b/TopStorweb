@@ -152,16 +152,20 @@ let ExcelToJSONParser = function() {
 			let poolNames = poolsList.map(pool => pool['text']);
 			let groupNames = grouplist.map(group => group['text']);
 			let badusers = [];
-			parsedUsers.forEach(user => {
+			parsedUsers.forEach((user, index) => {
 				let flag = uploadUsersChecker(user, usersNames, poolNames, groupNames);
 				if (flag === true)
-					badusers.push(user);
-				else
-					usersNames.push(user['name']);
+				{
+					let newBaduser = user;
+					newBaduser['index'] = index
+					badusers.push(newBaduser);
+				}
+				else usersNames.push(user['name']);
 			});
 			let tableBody = '';
-			badusers.forEach(user => {
+			badusers.forEach((user) => {
 				let tableRow =  '<tr>';
+				tableRow += `<td>${user['index']}</td>`;
 				// Name
 				if (usersNames.includes(user['name']))
 					tableRow += `<td class="table-danger">${user['name']}</td>`;
@@ -216,9 +220,9 @@ let ExcelToJSONParser = function() {
 					user['groups'].split(',').forEach(group => {
 						if (!(groupNames.includes(group)))
 						{
-							groupHtml.push("<p class='text-danger'>group</p>")
+							groupHtml.push(`<p class='text-danger'>${group}</p>`)
 							groupsFlag = true;
-						}
+						} else `<p>${group}</p>`
 					});
 					if (groupsFlag) tableRow += `<td class='table-danger d-flex'>${groupHtml.join(',')}</td>`;
 					else  tableRow += `<td>${user['groups']}</td>`;
