@@ -212,11 +212,15 @@ let ExcelToJSONParser = function() {
 				if (!(user['groups'] === undefined || user['groups'] === ''))
 				{
 					let groupsFlag = false;
+					let groupHtml = [];
 					user['groups'].split(',').forEach(group => {
 						if (!(groupNames.includes(group)))
+						{
+							groupHtml.append("<p class='text-danger'>group</p>")
 							groupsFlag = true;
+						}
 					});
-					if (groupsFlag) tableRow += `<td class='table-danger'>${user['groups']}</td>`;
+					if (groupsFlag) tableRow += `<td class='table-danger d-flex'>${groupHtml.join(',')}</td>`;
 					else  tableRow += `<td>${user['groups']}</td>`;
 				}
 				else tableRow += `<td>No Groups</td>`;
