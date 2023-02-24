@@ -179,18 +179,17 @@ let ExcelToJSONParser = function() {
 				// Volpool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
-					// Checks that the Pool is valid.
 					if (!(user['Volpool'].toString() in poolIds))
 						tableRow += `<td class="table-danger">${user['Volpool']}</td>`;
 					else tableRow += `<td>${user['Volpool']}</td>`;
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
-					tableRow += `<>No Home</td>`;
+					tableRow += `<td>No Home</td>`;
 				else tableRow += `<td>${user['Volpool']}</td>`;
 				// Volsize
 				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
-					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
-				else tableRow += `<td class="table-danger">1</td>`;
+					tableRow += `<td>${user['Volsize']}</td>`;
+				else tableRow += `<td>1</td>`;
 				// HomeAddress.
 				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 				{
@@ -214,17 +213,16 @@ let ExcelToJSONParser = function() {
 				// Groups
 				if (!(user['groups'] === undefined || user['groups'] === ''))
 				{
-					// Checks that each group selected is valid.
 					let groupsFlag = false;
 					user['groups'].split(',').forEach(group => {
 						if (!(group in groupIds))
 							groupsFlag = true;
 					});
-					if (groupsFlag) tableRow += `<td class="table-danger">${user['groups']}</td>`;
-					else  tableRow += `<td class="table-danger">${user['groups']}</td>`;
+					if (groupsFlag) tableRow += `<td>${user['groups']}</td>`;
+					else  tableRow += `<td>${user['groups']}</td>`;
 				}
 				else tableRow += `<td>No Groups</td>`;
-				tableRow +=  '</tr>';
+				tableRow += '</tr>';
 				tableBody += tableRow;
 			})
 			$("#badUsersBody").html(tableBody);
