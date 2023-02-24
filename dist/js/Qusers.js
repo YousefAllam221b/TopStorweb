@@ -216,7 +216,7 @@ let ExcelToJSONParser = function() {
 					user['groups'].split(',').forEach(group => {
 						if (!(groupNames.includes(group)))
 						{
-							groupHtml.append("<p class='text-danger'>group</p>")
+							groupHtml.push("<p class='text-danger'>group</p>")
 							groupsFlag = true;
 						}
 					});
