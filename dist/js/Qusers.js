@@ -205,7 +205,7 @@ let ExcelToJSONParser = function() {
 						else tableRow += `<td>${user['HomeAddress']}</td>`;
 					} 
 					else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
-				} else tableRow += `<td">No Address</td>`;
+				} else tableRow += `<td>No Address</td>`;
 				// Subnet
 				if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
 					tableRow += `<td>${user['HomeSubnet']}</td>`;
