@@ -176,9 +176,13 @@ $('#uploaderInput').change(function(e) {
 	var files = e.target.files; 
 	// console.log(files);
 	if (files.length === 0)
+	{
+		$('#upload-file-btn').prop('disabled', true);
 		return
+	}
     var parsedExcel = new ExcelToJSONParser();
     parsedExcel.parseExcel(files[0]);
+	$('#upload-file-btn').prop('disabled', false);
 })
 $('#upload-file-btn').click(function() {
 	var form_data = new FormData($('#upload-file')[0]);
