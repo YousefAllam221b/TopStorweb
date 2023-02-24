@@ -164,13 +164,15 @@ let ExcelToJSONParser = function() {
 			let tableBody = '';
 			badusers.forEach(user => {
 				let tableRow =  '<tr>';
+				// Name
 				if (usersNames.includes(user['name']))
 					tableRow += `<td class="table-danger">${user['name']}</td>`;
 				else if(user['name'] === undefined || user['name'] === '')
 					tableRow += `<td class="table-danger"></td>`;
+				// Password
 				if ( user['Password'] === undefined || user['Password'].length < 3)
 					tableRow += `<td class="table-danger">${user['Password']}</td>`;
-				// Checks if the user selected a Pool.
+				// Pool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
 					// Checks that the Pool is valid.
@@ -180,21 +182,12 @@ let ExcelToJSONParser = function() {
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
 					tableRow += `<td class="table-danger">No Home</td>`;
-				// Checks if the user selected a group.
-				if (!(user['groups'] === undefined || user['groups'] === ''))
-				{
-					// Checks that each group selected is valid.
-					let groupsFlag = false;
-					user['groups'].split(',').forEach(group => {
-						if (!(group in groupIds))
-							groupsFlag = true;
-					});
-					if (groupsFlag)
-						tableRow += `<td class="table-danger">${user['groups']}</td>`;
-					else 
-						tableRow += `<td class="table-danger">${user['groups']}</td>`;
-				}
-				// Checks if the user selected a HomeAddress.
+				// Size
+				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
+				else
+					tableRow += `<td class="table-danger">1</td>`;
+				// HomeAddress.
 				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 				{
 					// Checks if the HomeAddress is in the correct form.
@@ -210,14 +203,25 @@ let ExcelToJSONParser = function() {
 						tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
 				} else
 					tableRow += `<td">No Address</td>`;
-				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
-					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
-				else
-					tableRow += `<td class="table-danger">1</td>`;
-				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+				// Subnet
+				if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
 					tableRow += `<td class="table-danger">${user['HomeSubnet']}</td>`;
 				else
 					tableRow += `<td class="table-danger">8</td>`;
+				// Groups
+				if (!(user['groups'] === undefined || user['groups'] === ''))
+				{
+					// Checks that each group selected is valid.
+					let groupsFlag = false;
+					user['groups'].split(',').forEach(group => {
+						if (!(group in groupIds))
+							groupsFlag = true;
+					});
+					if (groupsFlag)
+						tableRow += `<td class="table-danger">${user['groups']}</td>`;
+					else 
+						tableRow += `<td class="table-danger">${user['groups']}</td>`;
+				}
 				tableRow +=  '</tr>';
 				tableBody += tableRow;
 			})
