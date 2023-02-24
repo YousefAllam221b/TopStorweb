@@ -206,7 +206,8 @@ let ExcelToJSONParser = function() {
 				tableRow +=  '</tr>';
 				tableBody += tableRow;
 			})
-			document.getElementById("badUsersBody").innerHTML =tableBody;
+			$("#badUsersBody").html(tableBody);
+			$('#BadUserList').show();
         	//   jQuery('#xlx_json').val(json_object);
         })
       };
@@ -222,6 +223,7 @@ var files = e.target.files;
 if (files.length === 0)
 {
 	$('#upload-file-btn').prop('disabled', true);
+	$('#BadUserList').hide();
 }
 })
 
@@ -230,6 +232,7 @@ $('#uploaderInput').change(function(e) {
 	if (files.length === 0)
 	{
 		$('#upload-file-btn').prop('disabled', true);
+		$('#BadUserList').hide();
 		return
 	}
     var parsedExcel = new ExcelToJSONParser();
