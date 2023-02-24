@@ -176,17 +176,23 @@ let ExcelToJSONParser = function() {
 					// Checks that the Pool is valid.
 					if (!(user['Volpool'].toString() in poolIds))
 						tableRow += `<td class="table-danger">${user['Volpool']}</td>`;
+					else tableRow += `<td>${user['Volpool']}</td>`;
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
-					tableRow += `<td class="table-danger"></td>`;
+					tableRow += `<td class="table-danger">No Home</td>`;
 				// Checks if the user selected a group.
 				if (!(user['groups'] === undefined || user['groups'] === ''))
 				{
 					// Checks that each group selected is valid.
+					let groupsFlag = false;
 					user['groups'].split(',').forEach(group => {
 						if (!(group in groupIds))
-							tableRow += '<td class="table-danger"></td>';
+							groupsFlag = true;
 					});
+					if (groupsFlag)
+						tableRow += `<td class="table-danger">${user['groups']}</td>`;
+					else 
+						tableRow += `<td class="table-danger">${user['groups']}</td>`;
 				}
 				// Checks if the user selected a HomeAddress.
 				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
@@ -197,12 +203,21 @@ let ExcelToJSONParser = function() {
 						// Checks that each number is valid.
 						user['HomeAddress'].split('.').forEach(number => {
 							if (parseInt(number) > 255 || parseInt(number) < 0)
-							tableRow += '<td class="table-danger"></td>';
+							tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
 						});
 					} 
 					else
-					tableRow += '<td class="table-danger"></td>';
-				}
+						tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
+				} else
+					tableRow += `<td">No Address</td>`;
+				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
+				else
+					tableRow += `<td class="table-danger">1</td>`;
+				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+					tableRow += `<td class="table-danger">${user['HomeSubnet']}</td>`;
+				else
+					tableRow += `<td class="table-danger">8</td>`;
 				tableRow +=  '</tr>';
 				tableBody += tableRow;
 			})
