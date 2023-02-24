@@ -169,17 +169,13 @@ let ExcelToJSONParser = function() {
 					tableRow += `<td class="table-danger">${user['name']}</td>`;
 				else if(user['name'] === undefined || user['name'] === '')
 					tableRow += `<td class="table-danger"></td>`;
-				else
-				{
-					tableRow += `<td>${user['name']}</td>`;
-				}
+				else tableRow += `<td>${user['name']}</td>`;
 				// Password
 				if (user['Password'] === undefined || user['Password'] === '')
 					tableRow += `<td class="table-danger"></td>`;
 				else if (user['Password'].length < 3)
 					tableRow += `<td class="table-danger">${user['Password']}</td>`;
-				else 
-					tableRow += `<td>${user['Password']}</td>`;
+				else tableRow += `<td>${user['Password']}</td>`;
 				// Volpool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
@@ -189,16 +185,15 @@ let ExcelToJSONParser = function() {
 					else tableRow += `<td>${user['Volpool']}</td>`;
 				}
 				else if (user['Volpool'] === undefined || user['Volpool'] === '')
-					tableRow += `<td class="table-danger">No Home</td>`;
+					tableRow += `<>No Home</td>`;
+				else tableRow += `<td>${user['Volpool']}</td>`;
 				// Volsize
 				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
 					tableRow += `<td class="table-danger">${user['Volsize']}</td>`;
-				else
-					tableRow += `<td class="table-danger">1</td>`;
+				else tableRow += `<td class="table-danger">1</td>`;
 				// HomeAddress.
 				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 				{
-					// Checks if the HomeAddress is in the correct form.
 					if (user['HomeAddress'].split('.').length === 4)
 					{
 						let addressFlag = false;
@@ -210,15 +205,12 @@ let ExcelToJSONParser = function() {
 							tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
 						else tableRow += `<td>${user['HomeAddress']}</td>`;
 					} 
-					else
-						tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
-				} else
-					tableRow += `<td">No Address</td>`;
+					else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
+				} else tableRow += `<td">No Address</td>`;
 				// Subnet
 				if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
-					tableRow += `<td class="table-danger">${user['HomeSubnet']}</td>`;
-				else
-					tableRow += `<td class="table-danger">8</td>`;
+					tableRow += `<td>${user['HomeSubnet']}</td>`;
+				else tableRow += `<td>8</td>`;
 				// Groups
 				if (!(user['groups'] === undefined || user['groups'] === ''))
 				{
@@ -228,17 +220,15 @@ let ExcelToJSONParser = function() {
 						if (!(group in groupIds))
 							groupsFlag = true;
 					});
-					if (groupsFlag)
-						tableRow += `<td class="table-danger">${user['groups']}</td>`;
-					else 
-						tableRow += `<td class="table-danger">${user['groups']}</td>`;
+					if (groupsFlag) tableRow += `<td class="table-danger">${user['groups']}</td>`;
+					else  tableRow += `<td class="table-danger">${user['groups']}</td>`;
 				}
+				else tableRow += `<td>No Groups</td>`;
 				tableRow +=  '</tr>';
 				tableBody += tableRow;
 			})
 			$("#badUsersBody").html(tableBody);
 			$('#BadUserList').show();
-        	//   jQuery('#xlx_json').val(json_object);
         })
       };
       reader.onerror = function(ex) {
