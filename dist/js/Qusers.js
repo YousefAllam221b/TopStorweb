@@ -169,6 +169,10 @@ let ExcelToJSONParser = function() {
 					tableRow += `<td class="table-danger">${user['name']}</td>`;
 				else if(user['name'] === undefined || user['name'] === '')
 					tableRow += `<td class="table-danger"></td>`;
+				else
+				{
+					tableRow += `<td>${user['name']}</td>`;
+				}
 				// Password
 				if (user['Password'] === undefined || user['Password'] === '')
 					tableRow += `<td class="table-danger"></td>`;
