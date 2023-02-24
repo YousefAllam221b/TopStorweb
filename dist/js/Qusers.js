@@ -67,7 +67,7 @@ $("#User").change(function (e) {
 });
 
 
-function uploadUsersChecker(user, usersNames, poolIds, groupIds)
+function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 {
 	let flag = false;
 	// Checks if there is a name  and it is unique.
@@ -79,7 +79,7 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 	{
 		// Checks that the Pool is valid.
-		if (!(user['Volpool'].toString() in poolIds))
+		if (!(poolNames.includes(user['Volpool'])))
 			flag = true;
 	}
 	// Checks if the user selected a group.
@@ -87,8 +87,8 @@ function uploadUsersChecker(user, usersNames, poolIds, groupIds)
 	{
 		// Checks that each group selected is valid.
 		user['groups'].split(',').forEach(group => {
-			if (!(group in groupIds))
-			flag = true
+			if (!(groupNames.includes(group)))
+				flag = true
 		});
 	}
 	// Checks if the user selected a HomeAddress.
@@ -113,9 +113,7 @@ let ExcelToJSONParser = function() {
       var reader = new FileReader();
       reader.onload = function(e) {
         var data = e.target.result;
-        var workbook = XLSX.read(data, {
-          type: 'binary'
-        });
+        var workbook = XLSX.read(data, {type: 'binary'});
         workbook.SheetNames.forEach(function(sheetName) {
 			var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 			var json_object = JSON.stringify(XL_row_object);
@@ -151,11 +149,11 @@ let ExcelToJSONParser = function() {
 				},
 			})
 			let usersNames = usersList.map(user => user['name']);
-			let poolIds = poolsList.map(pool => pool['id']);
-			let groupIds = grouplist.map(group => group['id']);
+			let poolNames = poolsList.map(pool => pool['text']);
+			let groupNames = grouplist.map(group => group['text']);
 			let badusers = [];
 			parsedUsers.forEach(user => {
-				let flag = uploadUsersChecker(user, usersNames, poolIds, groupIds);
+				let flag = uploadUsersChecker(user, usersNames, poolNames, groupNames);
 				if (flag === true)
 					badusers.push(user);
 				else
@@ -179,7 +177,7 @@ let ExcelToJSONParser = function() {
 				// Volpool
 				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 				{
-					if (!(user['Volpool'].toString() in poolIds))
+					if (!(poolNames.includes(user['Volpool'])))
 						tableRow += `<td class="table-danger">${user['Volpool']}</td>`;
 					else tableRow += `<td>${user['Volpool']}</td>`;
 				}
@@ -215,7 +213,7 @@ let ExcelToJSONParser = function() {
 				{
 					let groupsFlag = false;
 					user['groups'].split(',').forEach(group => {
-						if (!(group in groupIds))
+						if (!(groupNames.includes(group)))
 							groupsFlag = true;
 					});
 					if (groupsFlag) tableRow += `<td>${user['groups']}</td>`;
