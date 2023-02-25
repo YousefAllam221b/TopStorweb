@@ -205,7 +205,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					if (usersNames.includes(user['name']))
 						return `<p class="table-danger text-danger">${user['name']}</p>`;
 					else if(user['name'] === undefined || user['name'] === '')
-						return `<p class="table-danger emptyBadCell"></p>`;
+						return ``;
 					else return`<p>${user['name']}</p>`;
 				},
 			},
