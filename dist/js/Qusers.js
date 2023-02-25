@@ -200,10 +200,10 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 				data: null,
 				render: function (data, type, user) {
 					if (usersNames.includes(user['name']))
-						return `<td class="table-danger text-danger">${user['name']}</td>`;
+						return `<p class="table-danger text-danger">${user['name']}</p>`;
 					else if(user['name'] === undefined || user['name'] === '')
-						return `<td class="table-danger"></td>`;
-					else return`<td>${user['name']}</td>`;
+						return `<p class="table-danger"></p>`;
+					else return`<p>${user['name']}</p>`;
 					
 				},
 			},
