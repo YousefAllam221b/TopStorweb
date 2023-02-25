@@ -187,7 +187,7 @@ function generateBadUsersTable(badusers,usersNames,groupNames,poolNames)
 	$('#BadUserList').show();
 }
 
-function generateBadUsersDataTable(badusers)
+function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 {
 	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
 		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
@@ -291,7 +291,7 @@ let ExcelToJSONParser = function() {
 				else usersNames.push(user['name']);
 			});
 			generateBadUsersTable(badusers,usersNames,groupNames,poolNames);
-			generateBadUsersDataTable(badusers);
+			generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames);
         })
       };
       reader.onerror = function(ex) {
