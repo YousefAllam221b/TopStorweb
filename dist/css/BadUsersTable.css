@@ -10,3 +10,7 @@
 {
     padding: 0;
 }
+td:has(.emptyBadCell) {
+    /* ... */
+    color: #dc3545
+  }

@@ -191,7 +191,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 {
 	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
 		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
-		order: [[1, "aesc"]],
+		order: [[1, "asc"]],
 		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		data: badusers,
 		columns: [
@@ -205,7 +205,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					if (usersNames.includes(user['name']))
 						return `<p class="table-danger text-danger">${user['name']}</p>`;
 					else if(user['name'] === undefined || user['name'] === '')
-						return `<p class="table-danger"></p>`;
+						return `<p class="table-danger emptyBadCell"></p>`;
 					else return`<p>${user['name']}</p>`;
 				},
 			},
@@ -233,10 +233,72 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					else return `<p>${user['Volpool']}</p>`;
 				},
 			},
-			{data: "Volsize"},
-			{data: "HomeAddress"},
-			{data: "HomeSubnet"},
-			{data: "groups"},	
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+						return `<p>${user['Volsize']}</p>`;
+					else return `<p>1</p>`;
+				},
+			},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+					{
+						if (user['HomeAddress'].split('.').length === 4)
+						{
+							let addressFlag = false;
+							let addressHtml = [];
+							user['HomeAddress'].split('.').forEach(number => {
+								if (parseInt(number) > 255 || parseInt(number) < 0)
+								{
+									addressHtml.push(`<p class='text-danger'>${number}</p>`)
+									addressFlag = true;
+								} else addressHtml.push(`<p>${number}</p>`);
+							});
+							if (addressFlag)
+							return `<p class="table-danger d-flex">${addressHtml.join('.')}</p>`;
+							else return `<p>${user['HomeAddress']}</p>`;	
+						} 
+						else return `<p class="table-danger">${user['HomeAddress']}</p>`;
+					} else return `<p>No Address</p>`;
+
+					if (usersNames.includes(user['name']))
+						return `<p class="table-danger text-danger">${user['name']}</p>`;
+					else if(user['name'] === undefined || user['name'] === '')
+						return `<p class="table-danger emptyBadCell"></p>`;
+					else return`<p>${user['name']}</p>`;
+				},
+			},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
+					return `<p>${user['HomeSubnet']}</p>`;
+					else return `<p>8</p>`;
+				},
+			},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (!(user['groups'] === undefined || user['groups'] === ''))
+					{
+						let groupsFlag = false;
+						let groupHtml = [];
+						user['groups'].split(',').forEach(group => {
+							if (!(groupNames.includes(group)))
+							{
+								groupHtml.push(`<p class='text-danger'>${group}</p>`)
+								groupsFlag = true;
+							} else groupHtml.push(`<p>${group}</p>`);
+						});
+						if (groupsFlag) return `<p class='table-danger d-flex'>${groupHtml.join(',')}</p>`;
+						else  return `<p>${user['groups']}</p>`;
+					}
+					else return `<p>No Groups</p>`;
+				},
+			},
 			// {
 			// 	data: null,
 			// 	render: function (data, type, row) {
