@@ -108,7 +108,7 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	}
 	return flag;
 }
-function generateBadUsersTable(badusers)
+function generateBadUsersTable(badusers,usersNames,groupNames,poolNames)
 {
 	let tableBody = '';
 	badusers.forEach((user) => {
@@ -240,7 +240,7 @@ let ExcelToJSONParser = function() {
 				}
 				else usersNames.push(user['name']);
 			});
-			generateBadUsersTable(badusers);
+			generateBadUsersTable(badusers,usersNames,groupNames,poolNames);
 			
         })
       };
