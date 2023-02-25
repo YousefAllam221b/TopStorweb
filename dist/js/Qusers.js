@@ -213,7 +213,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 				data: null,
 				render: function (data, type, user) {
 					if (user['Password'] === undefined || user['Password'] === '')
-						return `<p class="emptyCell"></p>`;
+						return `<p class="emptyCell">|</p>`;
 					else if (user['Password'].length < 3)
 						return `<p class="table-danger text-danger">${user['Password']}</p>`;
 					else return `<p>${user['Password']}</p>`;
