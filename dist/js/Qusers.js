@@ -289,9 +289,9 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 						user['groups'].split(',').forEach(group => {
 							if (!(groupNames.includes(group)))
 							{
-								groupHtml.push(`<p class='text-danger'>${group}</p>`)
+								groupHtml.push(`<span class='text-danger'>${group}</span>`)
 								groupsFlag = true;
-							} else groupHtml.push(`<p>${group}</p>`);
+							} else groupHtml.push(`<span>${group}</span>`);
 						});
 						if (groupsFlag) return `<p class='table-danger d-flex'>${groupHtml.join(',')}</p>`;
 						else  return `<p>${user['groups']}</p>`;
