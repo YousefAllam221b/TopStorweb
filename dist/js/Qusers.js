@@ -191,12 +191,22 @@ function generateBadUsersDataTable(badusers)
 {
 	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
 		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
-		order: [[1, "desc"]],
+		order: [[1, "aesc"]],
 		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		data: badusers,
 		columns: [
 			{data: "index"},
-			{data: "name"},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (usersNames.includes(user['name']))
+						return `<td class="table-danger text-danger">${user['name']}</td>`;
+					else if(user['name'] === undefined || user['name'] === '')
+						return `<td class="table-danger"></td>`;
+					else return`<td>${user['name']}</td>`;
+					
+				},
+			},
 			{data: "Password"},
 			{data: "Volpool"},
 			{data: "Volsize"},
