@@ -281,7 +281,7 @@ let ExcelToJSONParser = function() {
 				else usersNames.push(user['name']);
 			});
 			generateBadUsersTable(badusers,usersNames,groupNames,poolNames);
-			
+			generateBadUsersDataTable(badusers);
         })
       };
       reader.onerror = function(ex) {
