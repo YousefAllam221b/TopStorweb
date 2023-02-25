@@ -23,11 +23,7 @@
     width: 100%!important;
     margin: 0;
 }
-.emptyCell
-{
-    color: #f5c6cb;
-}
-.emptyCell:focus
+.emptyCell, .emptyCell:focus, .emptyCell:hover
 {
     color: #f5c6cb;
 }
