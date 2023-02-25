@@ -263,12 +263,6 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 						} 
 						else return `<p class="table-danger">${user['HomeAddress']}</p>`;
 					} else return `<p>No Address</p>`;
-
-					if (usersNames.includes(user['name']))
-						return `<p class="table-danger text-danger">${user['name']}</p>`;
-					else if(user['name'] === undefined || user['name'] === '')
-						return `<p class="table-danger emptyBadCell"></p>`;
-					else return`<p>${user['name']}</p>`;
 				},
 			},
 			{
