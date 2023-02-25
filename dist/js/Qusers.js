@@ -186,6 +186,46 @@ function generateBadUsersTable(badusers,usersNames,groupNames,poolNames)
 	$("#badUsersBody").html(tableBody);
 	$('#BadUserList').show();
 }
+
+function generateBadUsersDataTable(badusers)
+{
+	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
+		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
+		order: [[1, "desc"]],
+		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		data: badusers,
+		columns: [
+			{data: "index"},
+			{data: "name"},
+			{data: "Password"},
+			{data: "Volpool"},
+			{data: "Volsize"},
+			{data: "HomeAddress"},
+			{data: "HomeSubnet"},
+			{data: "groups"},	
+			// {
+			// 	data: null,
+			// 	render: function (data, type, row) {
+			// 		return (
+			// 			'<a class="UnixDelUser" val="username" href="javascript:auserdel(\'' +
+			// 			row.name +
+			// 			"')\" >" +
+			// 			'<img  src="dist/img/delete.png" alt="cannott upload delete icon">' +
+			// 			"</a>"
+			// 		);
+			// 	},
+			// },
+		],
+		columnDefs: [
+			{
+				createdCell: function (td, cellData, rowData, row, col) {
+					$(td).data("grps", "cell-" + cellData);
+				},
+			},
+		],
+	});
+	badUserListDataTable.buttons().container().appendTo("#BadUserListDataTable_wrapper .col-6:eq(0)");
+}
 let ExcelToJSONParser = function() {
     this.parseExcel = function(file) {
       var reader = new FileReader();
