@@ -108,6 +108,84 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	}
 	return flag;
 }
+function generateBadUsersTable(badusers)
+{
+	let tableBody = '';
+	badusers.forEach((user) => {
+		let tableRow =  '<tr>';
+		tableRow += `<td>${user['index'] + 1}</td>`;
+		// Name
+		if (usersNames.includes(user['name']))
+			tableRow += `<td class="table-danger text-danger">${user['name']}</td>`;
+		else if(user['name'] === undefined || user['name'] === '')
+			tableRow += `<td class="table-danger"></td>`;
+		else tableRow += `<td>${user['name']}</td>`;
+		// Password
+		if (user['Password'] === undefined || user['Password'] === '')
+			tableRow += `<td class="table-danger"></td>`;
+		else if (user['Password'].length < 3)
+			tableRow += `<td class="table-danger text-danger">${user['Password']}</td>`;
+		else tableRow += `<td>${user['Password']}</td>`;
+		// Volpool
+		if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
+		{
+			if (!(poolNames.includes(user['Volpool'])))
+				tableRow += `<td class="table-danger text-danger">${user['Volpool']}</td>`;
+			else tableRow += `<td>${user['Volpool']}</td>`;
+		}
+		else if (user['Volpool'] === undefined || user['Volpool'] === '')
+			tableRow += `<td>No Home</td>`;
+		else tableRow += `<td>${user['Volpool']}</td>`;
+		// Volsize
+		if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
+			tableRow += `<td>${user['Volsize']}</td>`;
+		else tableRow += `<td>1</td>`;
+		// HomeAddress.
+		if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+		{
+			if (user['HomeAddress'].split('.').length === 4)
+			{
+				let addressFlag = false;
+				let addressHtml = [];
+				user['HomeAddress'].split('.').forEach(number => {
+					if (parseInt(number) > 255 || parseInt(number) < 0)
+					{
+						addressHtml.push(`<p class='text-danger'>${number}</p>`)
+						addressFlag = true;
+					} else addressHtml.push(`<p>${number}</p>`);
+				});
+				if (addressFlag)
+					tableRow += `<td class="table-danger d-flex">${addressHtml.join(',')}</td>`;
+				else tableRow += `<td>${user['HomeAddress']}</td>`;	
+			} 
+			else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
+		} else tableRow += `<td>No Address</td>`;
+		// Subnet
+		if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
+			tableRow += `<td>${user['HomeSubnet']}</td>`;
+		else tableRow += `<td>8</td>`;
+		// Groups
+		if (!(user['groups'] === undefined || user['groups'] === ''))
+		{
+			let groupsFlag = false;
+			let groupHtml = [];
+			user['groups'].split(',').forEach(group => {
+				if (!(groupNames.includes(group)))
+				{
+					groupHtml.push(`<p class='text-danger'>${group}</p>`)
+					groupsFlag = true;
+				} else groupHtml.push(`<p>${group}</p>`);
+			});
+			if (groupsFlag) tableRow += `<td class='table-danger d-flex'>${groupHtml.join(',')}</td>`;
+			else  tableRow += `<td>${user['groups']}</td>`;
+		}
+		else tableRow += `<td>No Groups</td>`;
+		tableRow += '</tr>';
+		tableBody += tableRow;
+	})
+	$("#badUsersBody").html(tableBody);
+	$('#BadUserList').show();
+}
 let ExcelToJSONParser = function() {
     this.parseExcel = function(file) {
       var reader = new FileReader();
@@ -162,81 +240,8 @@ let ExcelToJSONParser = function() {
 				}
 				else usersNames.push(user['name']);
 			});
-			let tableBody = '';
-			badusers.forEach((user) => {
-				let tableRow =  '<tr>';
-				tableRow += `<td>${user['index'] + 1}</td>`;
-				// Name
-				if (usersNames.includes(user['name']))
-					tableRow += `<td class="table-danger text-danger">${user['name']}</td>`;
-				else if(user['name'] === undefined || user['name'] === '')
-					tableRow += `<td class="table-danger"></td>`;
-				else tableRow += `<td>${user['name']}</td>`;
-				// Password
-				if (user['Password'] === undefined || user['Password'] === '')
-					tableRow += `<td class="table-danger"></td>`;
-				else if (user['Password'].length < 3)
-					tableRow += `<td class="table-danger text-danger">${user['Password']}</td>`;
-				else tableRow += `<td>${user['Password']}</td>`;
-				// Volpool
-				if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
-				{
-					if (!(poolNames.includes(user['Volpool'])))
-						tableRow += `<td class="table-danger text-danger">${user['Volpool']}</td>`;
-					else tableRow += `<td>${user['Volpool']}</td>`;
-				}
-				else if (user['Volpool'] === undefined || user['Volpool'] === '')
-					tableRow += `<td>No Home</td>`;
-				else tableRow += `<td>${user['Volpool']}</td>`;
-				// Volsize
-				if (!(user['Volsize'] === undefined || user['Volsize'] === ''))
-					tableRow += `<td>${user['Volsize']}</td>`;
-				else tableRow += `<td>1</td>`;
-				// HomeAddress.
-				if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
-				{
-					if (user['HomeAddress'].split('.').length === 4)
-					{
-						let addressFlag = false;
-						let addressHtml = [];
-						user['HomeAddress'].split('.').forEach(number => {
-							if (parseInt(number) > 255 || parseInt(number) < 0)
-							{
-								addressHtml.push(`<p class='text-danger'>${number}</p>`)
-								addressFlag = true;
-							} else addressHtml.push(`<p>${number}</p>`);
-						});
-						if (addressFlag)
-							tableRow += `<td class="table-danger d-flex">${addressHtml.join(',')}</td>`;
-						else tableRow += `<td>${user['HomeAddress']}</td>`;	
-					} 
-					else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
-				} else tableRow += `<td>No Address</td>`;
-				// Subnet
-				if (!(user['HomeSubnet'] === undefined || user['HomeSubnet'] === ''))
-					tableRow += `<td>${user['HomeSubnet']}</td>`;
-				else tableRow += `<td>8</td>`;
-				// Groups
-				if (!(user['groups'] === undefined || user['groups'] === ''))
-				{
-					let groupsFlag = false;
-					let groupHtml = [];
-					user['groups'].split(',').forEach(group => {
-						if (!(groupNames.includes(group)))
-						{
-							groupHtml.push(`<p class='text-danger'>${group}</p>`)
-							groupsFlag = true;
-						} else groupHtml.push(`<p>${group}</p>`);
-					});
-					if (groupsFlag) tableRow += `<td class='table-danger d-flex'>${groupHtml.join(',')}</td>`;
-					else  tableRow += `<td>${user['groups']}</td>`;
-				}
-				else tableRow += `<td>No Groups</td>`;
-				tableRow += '</tr>';
-				tableBody += tableRow;
-			})
-			$("#badUsersBody").html(tableBody);
-			$('#BadUserList').show();
+			generateBadUsersTable(badusers);
+			
         })
       };
       reader.onerror = function(ex) {
