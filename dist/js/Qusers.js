@@ -253,9 +253,9 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 							user['HomeAddress'].split('.').forEach(number => {
 								if (parseInt(number) > 255 || parseInt(number) < 0)
 								{
-									addressHtml.push(`<p class='text-danger'>${number}</p>`)
+									addressHtml.push(`<span class='text-danger'>${number}</span>`)
 									addressFlag = true;
-								} else addressHtml.push(`<p>${number}</p>`);
+								} else addressHtml.push(`<span>${number}</span>`);
 							});
 							if (addressFlag)
 							return `<p class="table-danger d-flex">${addressHtml.join('.')}</p>`;
