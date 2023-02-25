@@ -155,7 +155,7 @@ function generateBadUsersTable(badusers,usersNames,groupNames,poolNames)
 					} else addressHtml.push(`<p>${number}</p>`);
 				});
 				if (addressFlag)
-					tableRow += `<td class="table-danger d-flex">${addressHtml.join(',')}</td>`;
+					tableRow += `<td class="table-danger d-flex">${addressHtml.join('.')}</td>`;
 				else tableRow += `<td>${user['HomeAddress']}</td>`;	
 			} 
 			else tableRow += `<td class="table-danger">${user['HomeAddress']}</td>`;
