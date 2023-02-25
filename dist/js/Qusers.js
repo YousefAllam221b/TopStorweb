@@ -195,7 +195,10 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		data: badusers,
 		columns: [
-			{data: "index"},
+			{
+				data: null,
+				render: function (data, type, user) {return `<p>${user['index']}</p>`;},
+			},
 			{
 				data: null,
 				render: function (data, type, user) {
@@ -204,7 +207,6 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					else if(user['name'] === undefined || user['name'] === '')
 						return `<p class="table-danger"></p>`;
 					else return`<p>${user['name']}</p>`;
-					
 				},
 			},
 			{
@@ -217,7 +219,20 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					else return `<p>${user['Password']}</p>`;
 				},
 			},
-			{data: "Volpool"},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
+					{
+						if (!(poolNames.includes(user['Volpool'])))
+							return `<p class="table-danger text-danger">${user['Volpool']}</p>`;
+						else return`<p>${user['Volpool']}</p>`;
+					}
+					else if (user['Volpool'] === undefined || user['Volpool'] === '')
+						return `<p>No Home</p>`;
+					else return `<p>${user['Volpool']}</p>`;
+				},
+			},
 			{data: "Volsize"},
 			{data: "HomeAddress"},
 			{data: "HomeSubnet"},
@@ -237,9 +252,9 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 		],
 		columnDefs: [
 			{
-				createdCell: function (td, cellData, rowData, row, col) {
-					$(td).data("grps", "cell-" + cellData);
-				},
+				// createdCell: function (td, cellData, rowData, row, col) {
+				// 	$(td).data("grps", "cell-" + cellData);
+				// },
 			},
 		],
 	});
