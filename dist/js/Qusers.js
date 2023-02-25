@@ -207,7 +207,16 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					
 				},
 			},
-			{data: "Password"},
+			{
+				data: null,
+				render: function (data, type, user) {
+					if (user['Password'] === undefined || user['Password'] === '')
+						return  `<p class="table-danger"></p>`;
+					else if (user['Password'].length < 3)
+						return `<p class="table-danger text-danger">${user['Password']}</p>`;
+					else return `<p>${user['Password']}</p>`;
+				},
+			},
 			{data: "Volpool"},
 			{data: "Volsize"},
 			{data: "HomeAddress"},
