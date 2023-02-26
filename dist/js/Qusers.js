@@ -387,6 +387,7 @@ if (files.length === 0)
 {
 	$('#upload-file-btn').prop('disabled', true);
 	$('#BadUserList').hide();
+	$("#BadUserListDataTable").dataTable().fnDestroy();
 }
 })
 
