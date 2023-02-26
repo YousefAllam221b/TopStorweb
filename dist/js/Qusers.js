@@ -309,6 +309,9 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 		rowReorder: true,
         columnDefs: [
             { orderable: true, className: 'reorder', targets: 0 },
+			{ orderable: true, className: 'reorder', targets: 1 },
+			{ orderable: true, className: 'reorder', targets: 3 },
+			{ orderable: true, className: 'reorder', targets: 5 },
             { orderable: false, targets: '_all' }
         ]
 	});
