@@ -95,16 +95,9 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 	{
 		// Checks if the HomeAddress is in the correct form.
-		if (user['HomeAddress'].split('.').length === 4)
-		{
-			// Checks that each number is valid.
-			user['HomeAddress'].split('.').forEach(number => {
-				if (parseInt(number) > 255 || parseInt(number) < 0)
-				flag = true
-			});
-		} 
-		else
-			flag = true;
+		if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'])) {  
+			flag =true;
+		}
 	}
 	return flag;
 }
@@ -190,9 +183,6 @@ function generateBadUsersTable(badusers,usersNames,groupNames,poolNames)
 function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 {
 	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
-		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
-		// order: [[0, "asc"]],
-		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		data: badusers,
 		columns: [
 			{
@@ -251,11 +241,13 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 							let addressFlag = false;
 							let addressHtml = [];
 							user['HomeAddress'].split('.').forEach(number => {
-								if (parseInt(number) > 255 || parseInt(number) < 0)
-								{
-									addressHtml.push(`<span class='text-danger'>${number}</span>`)
-									addressFlag = true;
-								} else addressHtml.push(`<span>${number}</span>`);
+								if (/^\d+$/.test(val)){
+									if (parseInt(number) > 255 || parseInt(number) < 0)
+									{
+										addressHtml.push(`<span class='text-danger'>${number}</span>`)
+										addressFlag = true;
+									} else addressHtml.push(`<span>${number}</span>`);
+								} else addressHtml.push(`<span class='text-danger'>${number}</span>`)
 							});
 							if (addressFlag)
 							return `<p class="table-danger d-flex">${addressHtml.join('.')}</p>`;
