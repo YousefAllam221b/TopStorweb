@@ -354,6 +354,8 @@ let ExcelToJSONParser = function() {
 			})
 			let usersNames = usersList.map(user => user['name']);
 			let poolNames = poolsList.map(pool => pool['text']);
+			poolNames.push('No Address');
+			poolNames.push('NoAddress')
 			let groupNames = grouplist.map(group => group['text']);
 			let badusers = [];
 			parsedUsers.forEach((user, index) => {
