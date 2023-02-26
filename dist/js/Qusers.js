@@ -95,8 +95,8 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 	{
 		// Checks if the HomeAddress is in the correct form.
-		if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'])) {  
-			flag =true;
+		if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'])) {  
+			flag = true;
 		}
 	}
 	return flag;
@@ -241,7 +241,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 							let addressFlag = false;
 							let addressHtml = [];
 							user['HomeAddress'].split('.').forEach(number => {
-								if (/^\d+$/.test(val)){
+								if (/^\d+$/.test(number)){
 									if (parseInt(number) > 255 || parseInt(number) < 0)
 									{
 										addressHtml.push(`<span class='text-danger'>${number}</span>`)
