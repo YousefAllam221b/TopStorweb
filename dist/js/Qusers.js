@@ -383,8 +383,8 @@ $('#uploaderInput').click(function(e) {
 var files = e.target.files; 
 if (files.length === 0)
 {
-	$('#upload-file-btn').prop('disabled', true);
 	$('#BadUserList').hide();
+	$('#upload-file-btn').hide();
 	$("#BadUserListDataTable").dataTable().fnDestroy();
 }
 })
@@ -393,13 +393,13 @@ $('#uploaderInput').change(function(e) {
 	var files = e.target.files; 
 	if (files.length === 0)
 	{
-		$('#upload-file-btn').prop('disabled', true);
+		$('#upload-file-btn').hide();
 		$('#BadUserList').hide();
 		return
 	}
     var parsedExcel = new ExcelToJSONParser();
     parsedExcel.parseExcel(files[0]);
-	$('#upload-file-btn').prop('disabled', false);
+	$('#upload-file-btn').show();
 })
 $('#upload-file-btn').click(function() {
 	var form_data = new FormData($('#upload-file')[0]);
