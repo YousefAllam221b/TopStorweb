@@ -385,6 +385,8 @@ if (files.length === 0)
 {
 	$('#BadUserList').hide();
 	$('#upload-file-btn').hide();
+	$('#fileUploadSuccess').hide();
+	$('#fileUploadFailed').hide();
 	$("#BadUserListDataTable").dataTable().fnDestroy();
 }
 })
@@ -395,6 +397,8 @@ $('#uploaderInput').change(function(e) {
 	{
 		$('#upload-file-btn').hide();
 		$('#BadUserList').hide();
+		$('#fileUploadSuccess').hide();
+		$('#fileUploadFailed').hide();
 		return
 	}
     var parsedExcel = new ExcelToJSONParser();
@@ -411,8 +415,12 @@ $('#upload-file-btn').click(function() {
 		cache: false,
 		processData: false,
 		success: function(data) {
-			console.log('Success!');
+			$('#fileUploadSuccess').show();
 		},
+		error: function(data) {
+			$('#fileUploadFailed').show();
+		},
+		
 	});
 });
 
