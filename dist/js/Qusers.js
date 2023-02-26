@@ -191,7 +191,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 {
 	let badUserListDataTable = $("#BadUserListDataTable").DataTable({
 		//"responsive": true, "lengthChange": true, "autoWidth": true, "info":true,
-		order: [[1, "asc"]],
+		order: [[0, "asc"]],
 		//"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
 		data: badusers,
 		columns: [
@@ -306,12 +306,12 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 			// 	},
 			// },
 		],
+		rowReorder: true,
 		columnDefs: [
-			{
-				// createdCell: function (td, cellData, rowData, row, col) {
-				// 	$(td).data("grps", "cell-" + cellData);
-				// },
-			},
+			[
+				{ orderable: true, className: 'reorder', targets: [0,1,3,5] },
+				{ orderable: false, targets: '_all' }
+			]
 		],
 	});
 	badUserListDataTable.buttons().container().appendTo("#BadUserListDataTable_wrapper .col-6:eq(0)");
