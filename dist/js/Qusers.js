@@ -247,7 +247,10 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 										addressHtml.push(`<span class='text-danger'>${number}</span>`)
 										addressFlag = true;
 									} else addressHtml.push(`<span>${number}</span>`);
-								} else addressHtml.push(`<span class='text-danger'>${number}</span>`)
+								} else {
+										addressFlag = true;
+										addressHtml.push(`<span class='text-danger'>${number}</span>`)
+									}
 							});
 							if (addressFlag)
 							return `<p class="table-danger d-flex">${addressHtml.join('.')}</p>`;
