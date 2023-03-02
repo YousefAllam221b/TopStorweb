@@ -407,9 +407,10 @@ $('#uploaderInput').change(function(e) {
 })
 $('#upload-file-btn').click(function() {
 	var form_data = new FormData($('#upload-file')[0]);
+	let token = localStorage.getItem('token')
 	$.ajax({
 		type: 'POST',
-		url: 'api/v1/users/uploadUsers',
+		url: `api/v1/users/uploadUsers?token=${token}`,
 		data: form_data,
 		contentType: false,
 		cache: false,
