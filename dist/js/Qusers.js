@@ -135,7 +135,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 				render: function (data, type, user) {
 					if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 					{
-						if (!(poolNames.includes(user['Volpool'] || '-'.repeat(user['Volpool'].length()) === user['Volpool'] )))
+						if (!(poolNames.includes(user['Volpool'].toLowerCase()) || '-'.repeat(user['Volpool'].length()) === user['Volpool'] ))
 							return `<p class="table-danger text-danger">${user['Volpool']}</p>`;
 						else return`<p>${user['Volpool']}</p>`;
 					}
@@ -155,7 +155,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 			{
 				data: null,
 				render: function (data, type, user) {
-					if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+					if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === '' || user['HomeAddress'].toLowerCase() === 'No Address'.toLowerCase() || user['HomeAddress'].toLowerCase() === 'NoAddress'.toLowerCase()))
 					{
 						if (user['HomeAddress'].split('.').length === 4)
 						{
@@ -275,11 +275,11 @@ let ExcelToJSONParser = function() {
 				},
 			})
 			let usersNames = usersList.map(user => user['name']);
-			let poolNames = poolsList.map(pool => pool['text']);
-			poolNames.push('No Home');
-			poolNames.push('NoHome');
-			poolNames.push('No Pool');
-			poolNames.push('NoPool');
+			let poolNames = poolsList.map(pool => pool['text'].toLowerCase());
+			poolNames.push('no home');
+			poolNames.push('nohome');
+			poolNames.push('no pool');
+			poolNames.push('nopool');
 			let groupNames = grouplist.map(group => group['text']);
 			groupNames.push('No Group');
 			groupNames.push('NoGroup');
