@@ -71,8 +71,13 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 {
 	let flag = false;
 	// Checks if there is a name  and it is unique.
-	if (usersNames.includes(user['name'].trimEnd()) || user['name'] === undefined || user['name'] === '')
+	if ( user['name'] === undefined || user['name'] === '')
+	{
 		flag = true;
+	} else if (usersNames.includes(user['name'].trimEnd()))
+	{
+		flag = true;
+	}
 	if ( user['Password'] === undefined || user['Password'].length < 3)
 		flag = true;
 	// Checks if the user selected a Pool.
@@ -332,6 +337,8 @@ $('#uploaderInput').change(function(e) {
 })
 $('#upload-file-btn').click(function() {
 	var form_data = new FormData($('#upload-file')[0]);
+	$('#fileUploadFailed').hide();
+	$('#fileUploadFailed').hide();
 	let token = localStorage.getItem('token')
 	$.ajax({
 		type: 'POST',
