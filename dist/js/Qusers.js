@@ -231,6 +231,8 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
             { orderable: false, targets: '_all' }
         ]
 	});
+	$("#badUsersBody").html(tableBody);
+	$('#BadUserList').show();
 	badUserListDataTable.buttons().container().appendTo("#BadUserListDataTable_wrapper .col-6:eq(0)");
 }
 let ExcelToJSONParser = function() {
@@ -276,10 +278,12 @@ let ExcelToJSONParser = function() {
 			let usersNames = usersList.map(user => user['name']);
 			let poolNames = poolsList.map(pool => pool['text']);
 			poolNames.push('No Home');
-			poolNames.push('NoHome')
+			poolNames.push('NoHome');
+			poolNames.push('No Pool');
+			poolNames.push('NoPool');
 			let groupNames = grouplist.map(group => group['text']);
-			groupNames.push('NoGroup')
-			groupNames.push('No Group')
+			groupNames.push('No Group');
+			groupNames.push('NoGroup');
 			let badusers = [];
 			parsedUsers.forEach((user, index) => {
 				let flag = uploadUsersChecker(user, usersNames, poolNames, groupNames);
