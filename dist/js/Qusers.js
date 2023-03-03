@@ -231,7 +231,6 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
             { orderable: false, targets: '_all' }
         ]
 	});
-	$("#badUsersBody").html(tableBody);
 	$('#BadUserList').show();
 	badUserListDataTable.buttons().container().appendTo("#BadUserListDataTable_wrapper .col-6:eq(0)");
 }
