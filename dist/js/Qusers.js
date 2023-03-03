@@ -71,7 +71,7 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 {
 	let flag = false;
 	// Checks if there is a name  and it is unique.
-	if (usersNames.includes(user['name']) || user['name'] === undefined || user['name'] === '')
+	if (usersNames.includes(user['name'].trimEnd()) || user['name'] === undefined || user['name'] === '')
 		flag = true;
 	if ( user['Password'] === undefined || user['Password'].length < 3)
 		flag = true;
@@ -79,14 +79,14 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 	{
 		// Checks that the Pool is valid.
-		if (!(poolNames.includes(user['Volpool'])))
+		if (!(poolNames.includes(user['Volpool'].trimEnd())))
 			flag = true;
 	}
 	// Checks if the user selected a group.
 	if (!(user['groups'] === undefined || user['groups'] === ''))
 	{
 		// Checks that each group selected is valid.
-		user['groups'].split(',').forEach(group => {
+		user['groups'].trimEnd().split(',').forEach(group => {
 			if (!(groupNames.includes(group)))
 				flag = true
 		});
@@ -95,7 +95,7 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
 	{
 		// Checks if the HomeAddress is in the correct form.
-		if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'])) {  
+		if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'].trimEnd())) {  
 			flag = true;
 		}
 	}
@@ -135,7 +135,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 				render: function (data, type, user) {
 					if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 					{
-						if (!(poolNames.includes(user['Volpool'].toLowerCase()) || '-'.repeat(user['Volpool'].length()) === user['Volpool'] ))
+						if (!(poolNames.includes(user['Volpool'].toLowerCase()) || '-'.repeat(user['Volpool'].length) === user['Volpool'] ))
 							return `<p class="table-danger text-danger">${user['Volpool']}</p>`;
 						else return`<p>${user['Volpool']}</p>`;
 					}
