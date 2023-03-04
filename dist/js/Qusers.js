@@ -81,10 +81,11 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	if ( user['Password'] === undefined || user['Password'].length < 3)
 		flag = true;
 	// Checks if the user selected a Pool.
+	
 	if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 	{
 		// Checks that the Pool is valid.
-		if (!(poolNames.includes(user['Volpool'].trimEnd())))
+		if (!(poolNames.includes(user['Volpool'].trimEnd().toLowerCase()) || '-'.repeat(user['Volpool'].length) === user['Volpool'].trimEnd() ))
 			flag = true;
 	}
 	// Checks if the user selected a group.
@@ -92,12 +93,12 @@ function uploadUsersChecker(user, usersNames, poolNames, groupNames)
 	{
 		// Checks that each group selected is valid.
 		user['groups'].trimEnd().split(',').forEach(group => {
-			if (!(groupNames.includes(group)))
+			if (!(groupNames.includes(group) || group === ''))
 				flag = true
 		});
 	}
 	// Checks if the user selected a HomeAddress.
-	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === ''))
+	if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === '' || user['HomeAddress'].toLowerCase().trimEnd() === 'No Address'.toLowerCase() || user['HomeAddress'].toLowerCase().trimEnd() === 'NoAddress'.toLowerCase()))
 	{
 		// Checks if the HomeAddress is in the correct form.
 		if (!/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(user['HomeAddress'].trimEnd())) {  
@@ -118,7 +119,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 			{
 				data: null,
 				render: function (data, type, user) {
-					if (usersNames.includes(user['name']))
+					if (usersNames.includes(user['name'].trimEnd()))
 						return `<p class="table-danger text-danger">${user['name']}</p>`;
 					else if(user['name'] === undefined || user['name'] === '')
 						return `<p class="table-danger emptyCell">|</p>`;
@@ -140,7 +141,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 				render: function (data, type, user) {
 					if (!(user['Volpool'] === undefined || user['Volpool'] === ''))
 					{
-						if (!(poolNames.includes(user['Volpool'].toLowerCase()) || '-'.repeat(user['Volpool'].length) === user['Volpool'] ))
+						if (!(poolNames.includes(user['Volpool'].trimEnd().toLowerCase()) || '-'.repeat(user['Volpool'].length) === user['Volpool'].trimEnd() ))
 							return `<p class="table-danger text-danger">${user['Volpool']}</p>`;
 						else return`<p>${user['Volpool']}</p>`;
 					}
@@ -160,7 +161,7 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 			{
 				data: null,
 				render: function (data, type, user) {
-					if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === '' || user['HomeAddress'].toLowerCase() === 'No Address'.toLowerCase() || user['HomeAddress'].toLowerCase() === 'NoAddress'.toLowerCase()))
+					if (!(user['HomeAddress'] === undefined || user['HomeAddress'] === '' || user['HomeAddress'].toLowerCase().trimEnd() === 'No Address'.toLowerCase() || user['HomeAddress'].toLowerCase().trimEnd() === 'NoAddress'.toLowerCase()))
 					{
 						if (user['HomeAddress'].split('.').length === 4)
 						{
@@ -201,8 +202,8 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 					{
 						let groupsFlag = false;
 						let groupHtml = [];
-						user['groups'].split(',').forEach(group => {
-							if (!(groupNames.includes(group)))
+						user['groups'].trimEnd().split(',').forEach(group => {
+							if (!(groupNames.includes(group) || group === ''))
 							{
 								groupHtml.push(`<span class='text-danger'>${group}</span>`)
 								groupsFlag = true;
