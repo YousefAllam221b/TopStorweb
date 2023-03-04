@@ -119,10 +119,10 @@ function generateBadUsersDataTable(badusers,usersNames,groupNames,poolNames)
 			{
 				data: null,
 				render: function (data, type, user) {
-					if (usersNames.includes(user['name'].trimEnd()))
-						return `<p class="table-danger text-danger">${user['name']}</p>`;
-					else if(user['name'] === undefined || user['name'] === '')
+					if(user['name'] === undefined || user['name'] === '')
 						return `<p class="table-danger emptyCell">|</p>`;
+					else if (usersNames.includes(user['name'].trimEnd()))
+						return `<p class="table-danger text-danger">${user['name']}</p>`;
 					else return`<p>${user['name']}</p>`;
 				},
 			},
