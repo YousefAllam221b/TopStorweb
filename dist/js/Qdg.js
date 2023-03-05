@@ -176,6 +176,20 @@ function initdgs() {
 				raid = tt;
 				cols = alldgs["raids"][raid]["disks"].length + alldgs["raids"][raid]["missingdisks"][0];
 				colsmean = Math.ceil(12 / cols);
+				let spacing = '';
+				if (cols > 6) {
+					colsmean = 1;
+					spacing = 'justify-content-around';
+				} else if (cols == 5) {
+					colsmean = 2;
+					spacing = 'justify-content-around';
+				}
+				if (cols > 12)
+				{
+					spacing = 'justify-content-start';
+					cols = 12;
+				}
+
 				$("#" + pool + " .disks").append(
 					'<div class="col-' +
 						cols +
@@ -185,7 +199,7 @@ function initdgs() {
 						'">' +
 						raid.split("_")[0] +
 						"</sub>" +
-						'<div class="row" id=' +
+						'<div class="row ' + spacing + '" id=' +
 						raid +
 						' style="border: solid; border-color: grey; border-width:1px;"></div>' +
 						"</div>"
