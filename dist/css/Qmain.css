@@ -89,3 +89,13 @@ select.btn-mini + .caret {
 		75%		{ background-color: #254878;}
 		100%	        { background-color: #04a1d5;}
 	}
+
+.hostform
+{
+	padding: 0 3rem;
+}
+
+.hostform label{
+	margin: auto 0;
+}
+
