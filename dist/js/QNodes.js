@@ -103,12 +103,18 @@ function updaterunninghosts(status) {
 			$("#cDNS").css("font-size", "0.8rem").text("select a node...");
 			$("#customSwitch1").prop("checked", false);
 			$(".runningnodes").attr("disabled", "disabled");
+			$("#NTP").attr("placeholder", "");
+			$("#NTPname").attr("placeholder", "");
+			$(".floating-labels").css("background-color", "");
 		} else {
 			var hostdata = hostsinfo[allhosts[status][selectedhost[status]]["name"]];
 			$(".runningnodes").attr("disabled", false);
 			$("#cBoxName").text(hostdata["alias"]);
 			$("#cIPAddress").text(hostdata["ipaddr"] + "/" + hostdata["ipaddrsubnet"]);
 			$("#cMgmt").text(hostdata["cluster"]);
+			$("#NTP").attr("placeholder", "xxx.xxx.xxx.xxx");
+			$("#NTPname").attr("placeholder", "NTP Name");
+			$(".floating-labels").css("background-color", "#fff");
 			$("#NodePorts option").remove();
 			$.each(hostdata["ports"], function (_, portInfo) {
                         	var o = new Option(portInfo[1], portInfo[1]);
