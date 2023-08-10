@@ -95,3 +95,8 @@ select.btn-mini + .caret {
   opacity: 0.5;
   text-decoration: none;
 }
+
+.poolNeedHealing
+{
+	background-color: #FFE17F!important;
+}

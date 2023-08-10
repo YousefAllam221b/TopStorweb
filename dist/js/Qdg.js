@@ -6,7 +6,7 @@ disks[kk] = [];
 disks[kk]["pool"] = "disks[kk].pool";
 diskdiv2 = "diskdiv2";
 poolid = "poolid";
-alldgs = { disks: {}, newraid: {}, pools: {}, raids: {} };
+alldgs = { disks: {}, newraid: {}, pools: {}, raids: {}, needsHealing: {} };
 col = 1;
 disks[kk]["host"] = "disks[kk].host";
 disks[kk]["status"] = "disks[kk].status";
@@ -139,6 +139,7 @@ function initdgs() {
 	$(".phdcp").remove();
 	$.each(alldgs["pools"], function (e, t) {
 		if (e.includes("pree") < 1) {
+			let currentPool = e;
 			pool = e;
 			poolcard = $(".toclone").clone();
 			poolcard.insertBefore($("#freepools"));
@@ -147,8 +148,17 @@ function initdgs() {
 			poolcard.prop("id", pool);
 			$("#" + pool + " .title").text(pool);
 			var allsize = Math.round(100 * (parseFloat(t["available"]) + parseFloat(t["used"]))) / 100;
-			$("#" + pool + " .spansize").text("size:" + allsize.toString() + "GB");
-			$("#" + pool + " .spanused").text("used:" + t["used"].toString().slice(0, 5) + "GB");
+			$("#" + pool + " .spansize").text("Size: " + allsize.toString() + "GB");
+			$("#" + pool + " .spanused").text("Used: " + t["used"].toString().slice(0, 5) + "GB");
+			if (!(alldgs['needsHealing'][pool] === undefined))
+			{	
+				$("#" + e + " .needsHealing")[0].classList.remove('d-none');
+				$("#" + e + " .poolHeader")[0].classList.add('poolNeedHealing');
+			} else
+			{
+				$("#" + e + " .needsHealing")[0].classList.add('d-none');
+				$("#" + e + " .poolHeader")[0].classList.remove('poolNeedHealing');
+			} 
 			var avtype = "Highly Available";
 			var avcolor = "blue";
 			if (t["name"] != "pree" && t["availtype"] != "Availability") {
@@ -172,7 +182,7 @@ function initdgs() {
 			}
 			$("#" + pool + " .spanredundancy").text(avtype);
 			$("#" + pool + " .spanredundancy").css("color", avcolor);
-			$("#" + pool + " .spandedup").text("dedup:" + t["dedup"]);
+			$("#" + pool + " .spandedup").text("Dedup: " + t["dedup"]);
 
 			$.each(t["raids"], function (ee, tt) {
 				raid = tt;
@@ -542,9 +552,13 @@ function getChanges(prev, now) {
 
 function dgrefresh(newdgs) {
 	var needupdate = 0;
+	if (JSON.stringify(alldgs["needsHealing"]) != JSON.stringify(newdgs["needsHealing"]))
+		
+	console.log(alldgs);
 	if (
 		JSON.stringify(alldgs["disks"]) != JSON.stringify(newdgs["disks"]) ||
-		JSON.stringify(alldgs["raids"]) != JSON.stringify(newdgs["raids"])
+		JSON.stringify(alldgs["raids"]) != JSON.stringify(newdgs["raids"]) ||
+		JSON.stringify(alldgs["needsHealing"]) != JSON.stringify(newdgs["needsHealing"])
 	) {
 		needupdate = 1;
 	}
@@ -564,7 +578,6 @@ function dgrefresh(newdgs) {
 	}
 	if (needupdate) {
 		alldgs = JSON.parse(JSON.stringify(newdgs));
-
 		initdgs();
 		initaddgs();
 	}

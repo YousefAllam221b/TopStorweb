@@ -332,26 +332,27 @@
         <div class="row toclone" style="display: none;">
           <div class="col-md-12">
             <div class="card card-outline card-primary datacard">
-              <div class="card-header" style="cursor: cell;">
+              <div class="card-header poolHeader" style="cursor: cell;">
                 <div class="card-tools" >
                   <!-- Collapse Button -->
                   <button type="button" class="btn btn-tool "  data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                 </div>
-                <div class="row" data-card-widget="collapse">
-                  <div class='col-3'>
-                    <h3 class="card-title text-lg cardshead" >Pool: <strong class="title">PDHCP234445532</strong></h3>
+                <div class="row justify-content-between" data-card-widget="collapse">
+		  <div class="col-8">
+                    		<h3 class="mr-4  card-title text-lg cardshead" ><strong class="title">PDHCP234445532</strong></h3>
+                    		<h3 class='mr-4 card-title text-lg cardshead spanredundancy'></h3>
+                    		<h3 class='needsHealing card-title text-lg cardshead d-none'>Needs Manual Healing</h3>
                   </div>
-                  <div class='col-3'>
-                    <span class='spanredundancy'></span>
-                  </div>
-                  <div class='col-2'>
-                    <span class='spansize'></span>
-                  </div>
-                  <div class='col-2'>
-                    <span class='spanused'></span>
-                  </div>
-                  <div class='col-2'>
-                      <span class='spandedup'></span>
+		  <div class="col-4 d-flex">
+                  	<div class='d-flex mr-4'>
+                    		<span class='spansize'></span>
+                  	</div>
+                  	<div class=' d-flex mr-4'>
+                    		<span class='spanused'></span>
+                  	</div>
+                  	<div class='d-flex'>
+                      		<span class='spandedup'></span>
+                  	</div>
                   </div>
                 </div>
 
